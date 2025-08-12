@@ -1,0 +1,144 @@
+/* ----------------- Global Styles ----------------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background: linear-gradient(135deg, rgb(141, 207, 233) 0%, #2575fc 100%);
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ----------------- Form Container ----------------- */
+.formContainer {
+  background: white;
+  width: 400px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  position: relative;
+  padding: 50px 30px 40px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.formContainer:hover {
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
+}
+
+.logo-circle {
+  width: 120px;
+  height: 120px;
+  background-color: #2575fc;
+  border-radius: 50%;
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  z-index: 10;
+}
+
+.logo-circle img {
+  width: 70px;
+  height: 70px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 3px rgba(0,0,0,0.1));
+}
+
+.title {
+  margin-top: 80px;
+  margin-bottom: 20px;
+  color: #333;
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.input-container {
+  position: relative;
+  margin: 20px 0;
+}
+
+.input-container .icon {
+  position: absolute;
+  top: 50%;
+  left: 15px;
+  transform: translateY(-50%);
+  color: #2575fc;
+}
+
+.input-container input {
+  width: 100%;
+  padding: 12px 12px 12px 40px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+  font-size: 1rem;
+  transition: border 0.3s ease, box-shadow 0.3s ease;
+}
+
+.input-container input:focus {
+  border-color: #2575fc;
+  box-shadow: 0 0 5px #2575fc66;
+}
+
+.submit-btn {
+  background-color: #2575fc;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  margin-top: 20px;
+  width: 100%;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.submit-btn:hover {
+  background-color: #1d5ed9;
+  transform: translateY(-3px);
+}
+
+.submit-btn:active {
+  background-color: #1a5dbd;
+  transform: translateY(0);
+}
+
+.error-message {
+  color: red;
+  margin-top: 10px;
+  font-size: 0.9rem;
+}
+
+/* ----------------- Responsive Design ----------------- */
+@media (max-width: 400px) {
+  .formContainer {
+      width: 90%;
+      padding: 50px 20px 30px;
+  }
+
+  .logo-circle {
+      width: 80px;
+      height: 80px;
+      top: -40px;
+  }
+
+  .logo-circle img {
+      width: 40px;
+      height: 40px;
+  }
+
+  .title {
+      font-size: 1.5rem;
+  }
+}

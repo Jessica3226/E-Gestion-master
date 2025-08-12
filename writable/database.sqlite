@@ -1,0 +1,16 @@
+CREATE TABLE agents (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    matricule TEXT NOT NULL UNIQUE,
+    nom_agent TEXT NOT NULL,
+    prenom_agent TEXT NOT NULL,
+    poste TEXT NOT NULL,
+    password TEXT NOT NULL,
+    date_naissance TEXT,
+    situation_marital TEXT,
+    contact TEXT,
+    grade TEXT,
+    corps TEXT,
+    localisation TEXT,
+    direction TEXT,
+    role TEXT CHECK(role IN ('admin', 'user')) DEFAULT 'user'
+);

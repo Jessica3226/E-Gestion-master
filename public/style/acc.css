@@ -1,0 +1,97 @@
+/* ---------------------- GLOBAL ---------------------- */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #a1c4fd, #c2e9fb);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ---------------------- HEADER ---------------------- */
+.NavBar {
+    background: rgba(0, 0, 0, 0.2);
+    height: 100px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 90%;
+    max-width: 1200px;
+}
+
+.logo {
+    height: 80px;
+    width: auto;
+}
+
+.header-content h1 {
+    color: #fff;
+    font-size: 2.2rem;
+    font-weight: 600;
+    text-align: center;
+    flex: 1;
+    margin: 0 20px;
+}
+
+/* ---------------------- CONTAINER ---------------------- */
+.container {
+    flex: 1;
+    display: grid;
+    place-items: center;
+    gap: 30px;
+    padding: 40px 20px;
+    margin-top: 30px;
+}
+
+/* ---------------------- BUTTONS ---------------------- */
+.btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 360px;
+    height: 100px;
+    background-color: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+    text-decoration: none;
+    color: #333;
+    font-size: 1.8rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #f0f0f0;
+    transform: translateY(-5px) scale(1.02);
+}
+
+/* ---------------------- RESPONSIVE ---------------------- */
+@media (max-width: 768px) {
+    .header-content {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .header-content h1 {
+        font-size: 1.5rem;
+    }
+
+    .container {
+        grid-template-columns: 1fr;
+        padding: 20px;
+    }
+
+    .btn {
+        width: 90%;
+        height: 70px;
+        font-size: 1.2rem;
+    }
+}
