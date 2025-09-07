@@ -123,6 +123,22 @@ class Auth extends Controller
         return redirect()->to('/profil');
     }
 
+    public function profil()
+{
+    $session = session();
+
+    if (!$session->get('isLoggedIn')) {
+        // Tsy tafiditra → redirect amin'ny login
+        return redirect()->to('/login')->with('error', 'Veuillez vous reconnecter.');
+    }
+
+    $agent_id = $session->get('agent_id');
+    $agent = $this->agentModel->find($agent_id);
+
+    return view('profil', ['agent' => $agent]);
+}
+
+
     public function logout()
     {       
         session()->destroy();

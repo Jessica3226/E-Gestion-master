@@ -60,13 +60,13 @@
       <!-- Email input -->
       <div class="input-group mb-3">
         <span class="input-group-text"><i class="bi bi-envelope-fill"></i></span>
-        <input type="email" name="email" class="form-control" placeholder="Votre adresse email" required>
+        <input type="email" name="email" class="form-control" value="<?= esc($agent['email'] ?? '') ?>" placeholder="Votre adresse email" required>
       </div>
 
       <!-- Adresse input -->
       <div class="input-group mb-4">
         <span class="input-group-text"><i class="bi bi-geo-alt-fill"></i></span>
-        <input type="text" name="adresse" class="form-control" placeholder="Votre adresse postale" required>
+        <input type="text" name="adresse" class="form-control" value="<?= esc($agent['adresse'] ?? '') ?>" placeholder="Votre adresse postale" required>
       </div>
 
       <div class="d-grid">

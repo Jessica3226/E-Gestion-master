@@ -1,281 +1,274 @@
+/* PARTIE 1 */
+/* PROFIL  */
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f1f3f5;
+    font-family: 'Segoe UI', sans-serif;
+  }
+
+  /* ===== HEADER ===== */
+  .app-header {
+    background: linear-gradient(135deg, #198754, #28a745);
+    color: #fff;
+    padding: 15px 25px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  }
+  .app-header h3 {
     margin: 0;
-    padding: 0;
-}
+    font-weight: 600;
+  }
 
-input[type="file"] {
-    display: none; 
-}
+  .logo-left {
+    height: 45px;
+    width: auto;
+   }
 
-h1 {
-    text-align: center;
-    color: #0d47a1;
-    margin-bottom: 25px;
-    font-size: 40px;
-}
-
-.profile-img-wrapper {
+  /* Hamburger menu */
+  .menu-btn {
+    font-size: 1.6rem;
+    color: #fff;
+    background: transparent;
+    border: none;
+    cursor: pointer;
     position: relative;
-    width: 100px;
-    height: 100px;
-}
-
-.profile-img-wrapper img {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid #6c757d;
-}
-
-.profile-img-wrapper label {
+  }
+  .menu-btn:focus {
+    outline: none;
+  }
+  .dropdown-menu-custom {
     position: absolute;
-    bottom: 5px;
-    right: 5px;
-    background: white;
-    border: 1px solid #ccc;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
+    top: 60px;
+    right: 0;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    min-width: 180px;
+    display: none;
+    flex-direction: column;
+    z-index: 1000;
+    overflow: hidden;
+  }
+  .dropdown-menu-custom a {
+    padding: 12px 16px;
+    color: #212529;
+    text-decoration: none;
+    transition: background .2s;
+  }
+  .dropdown-menu-custom a:hover {
+    background: #e9ecef;
+  }
+
+  /* ===== CARD PROFIL ===== */
+  .profile-section {
+    min-height: calc(100vh - 70px);
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 40px 15px;
+  }
+  .profile-card {
+    background: #fff;
+    border-radius: 16px;
+    border: 1px solid #dee2e6;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    padding: 40px 30px;
+    width: 100%;
+    max-width: 1100px;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp .8s ease forwards;
+  }
+  .title-text{
+    font-size: 30px;
+    padding-bottom: 10%;
+  }
+  .contact{
+    padding-top: 10%;
+  }
+
+  @keyframes fadeInUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .profile-photo {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 6px solid #e9ecef;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    margin-bottom: 15px;
+    transition: transform .3s ease;
+  }
+  .profile-photo:hover {
+    transform: scale(1.05);
+  }
+  .profile-photo-wrapper {
+    position: relative;
+    display: inline-block;
+  }
+  .profile-photo-wrapper label {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background: #198754;
+    color: #fff;
+    border-radius: 50%;
+    padding: 8px;
     cursor: pointer;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-}
-
-.profile-img-wrapper label i {
-    font-size: 18px;
-    color: #333;
-}
-
-.profile-pic{
-    top: 65px;
-}
-
-input[type="file"] {
+    border: 2px solid #fff;
+    transition: background .3s ease;
+  }
+  .profile-photo-wrapper label:hover {
+    background: #146c43;
+  }
+  .profile-photo-wrapper input {
     display: none;
-}
+  }
 
-.footer{
-    margin-top: 10px;
-    margin-left: 30%;
-    font-size: 13px;
-}
-
-.container-main {
-    flex: 1;
-    display: grid;
-    gap: 3px;
-    padding: 3% 20%;
-}
-.form-row {
-    display: flex;
-    justify-content: space-between;
-    padding: 8px 0;
-    border-bottom: 1px solid #ddd;
-}
-
-.form-row > div {
-    width: 48%;
-}
-
-.action-buttons {
-    position: fixed;
-    bottom: 20px;
-    right: 45%;
-    display: flex;
-    gap: 50%;
-    z-index: 1000;
-}
-
-.print-btn, .logout-btn {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    padding: 10px 18px;
-    font-size: 16px;
+  .fullname {
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: #212529;
+  }
+  .subtext {
+    color: #198754;
+    font-size: 1rem;
     font-weight: 500;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-    transition: background-color 0.3s ease, transform 0.2s ease;
-}
+  }
+  .details-list p {
+    margin-bottom: 6px;
+    font-size: .95rem;
+    border-bottom: 1px dashed #dee2e6;
+    padding-bottom: 4px;
+  }
+  .details-list strong {
+    min-width: 150px;
+    display: inline-block;
+    color: #495057;
+  }
 
-.print-btn {
-    background-color: #28a745; 
-    color: #fff;
-}
 
-.logout-btn {
-    background-color: #dc3545; 
-    color: #fff;
-}
 
-.print-btn:hover {
-    background-color: #218838;
-    transform: scale(1.05);
-}
-
-.logout-btn:hover {
-    background-color: #c82333;
-    transform: scale(1.05);
-}
-.Malagasy{
-    width: 15%;
+  /* PARTIE 2 */
+  /* CERTIFICAT */
+  .Malagasy {
+    width: 120px;
     height: auto;
+    max-width: 100%;
 }
 
-.info{
-    font-size: 10px;
-    margin: 0 10%;
+.info {
+    font-size: 12px;     /* nihena 1pt */
+    line-height: 1.1;    /* akaiky kokoa */
+    margin-right: 70%;   /* tsy be loatra intsony */
 }
 
-.date{
-    text-align: right; 
-    font-size: 15px;
+.info p {
+    margin: 2px 0;
+    padding: 0;
 }
 
-@media print {
-    .body{
-        font-size: 13px;
-        padding-top: 5%;
-    }
-    .A1{
-        margin-right: -11%;
-    }
-    .A2{
-        margin-right: -3%;
-    }
-    .A3{
-        margin-right: -10%;
-    }
-    .A4{
-        margin-right: -14%;
-    }
-    .A5{
-        margin-right: -7%;
+.lab{
+    margin-left: 20%;
+}
+
+.footer {
+    margin-left: 40%;
+}
+
+.fx {
+    font-size: 26px;
+    padding-top: 2%;
+}
+
+.liste {
+    margin-left: 35%;
+    max-width: 800px;
+}
+
+.liste table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.liste td {
+    padding: 4px 15px;   /* espace équilibré */
+    vertical-align: top;
+}
+
+.liste td:first-child {
+    width: 220px;
+    font-weight: bold;
+    text-align: left;
+    white-space: nowrap;
+    padding-right: 25px;
+}
+
+@media (max-width: 768px) {
+    .fx {
+        font-size: 20px;
     }
 
-    .footer{
-        font-size: 10px;
-        margin-left: 50%;
-    }
-
-    .fx{
-        margin-top: 8%;
-        font-size: 2rem;
-    }
-
-    .action-buttons, label[for="profile-pic"] {
-        display: none !important;
-    }
-
-    /* Famaritana layout madio ho an'ny print */
-    body {
-        font-family: Arial, sans-serif;
-        font-size: 12pt;
-        color: #000;
-        background: none !important;
-    }
-
-    .container, .container-main, .text-center {
-        width: 100%;
+    .liste{
         margin: 0 auto;
     }
 
-    /* Manafoana ireo effets amin'ny écran (shadows, gradients) */
-    img {
-        border: none !important;
+    .liste td:first-child {
+        width: 100px;
     }
 
-    hr {
-        border: 1px solid #000;
-    }
-    .container-main {
-        font-size: 12px; /* na 11px raha tianao kely kokoa */
-        line-height: 1.3;
+    .info {
+        font-size: 11px;
     }
 
-    .pdp {
-        display: block !important;
-        text-align: center;
-        margin-bottom: 20px; 
+    
+}
+
+@media print {
+    body {
+        font-size: 10pt;
+        color: black;
     }
 
-    .pdp img {
-        width: 120px !important;  
-        height: 120px !important;
-        border-width: 1px !important;
-    }
-
-    .hisName {
-        font-size: 12px;
-        margin-top: 25px;
-        font-weight: 600;
-    }
-
-    /* Raha misy labels na buttons ao amin'ilay zone azo esorina amin'ny print */
-    .pdp label,
-    .pdp input[type="file"],
-    .pdp .btn {
+    .no-print {
         display: none !important;
     }
 
-    .date{
-        margin-top: -18%;
-        font-size: 10px;
-    }
-}
-
-@media screen and (max-width: 768px) {
-
-    .form-row {
-        flex-direction: column;
-        gap: 15px;
+    .action-buttons {
+        display: none !important;
     }
 
-    .form-row div {
-        width: 100%;
-        font-size: 13px;
+    .Malagasy {
+        width: 100px;
     }
 
-    .hisName{
-        margin-right: -10%;
-    }
-
-    .container {
-        padding: 0 5%;
-    }
-
-    h1 {
-        font-size: 30px;
-    }
-
-    h2 {
+    .fx {
         font-size: 22px;
     }
+     .lab{
+        margin-left: -2%;
+     }
 
-    .print-btn {
-        top: auto;
-        bottom: 60px;
-        right: 50%;
-        transform: translateX(50%);
+    .liste {
+        max-width: 90%;
+        margin-left: 16%;
+    }
+    .info{
+        max-width: 100%;
     }
 
-    .logout-btn {
-        top: auto;
-        bottom: 10px;
-        right: 50%;
-        transform: translateX(50%);
-    }
-
-    .print {
-        top: auto;
-        bottom: 110px;
-        right: 50%;
-        transform: translateX(50%);
+    @page {
+        size: A4;
+        margin: 20mm;
     }
 }
+
+  /* PARTIE 3 */
+  /* SITUATION */
+  

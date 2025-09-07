@@ -15,6 +15,8 @@ $routes->get('/inscrit', 'Auth::inscrit');
 $routes->post('/inscrit', 'Auth::doInscription');
 
 $routes->get('/profil','Dashboard::admin');
+$routes->get('situation', 'Dashboard::situation');
+$routes->get('certificat', 'Dashboard::certificat');
 $routes->get('/admin/dashboard', 'Dashboard::admin');
 $routes->get('/dashboard', 'Dashboard::user');
 $routes->get('/logout', 'Auth::logout');

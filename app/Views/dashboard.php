@@ -31,7 +31,8 @@ header("Pragma: no-cache");
     </div>
     <script>
         function logoutUser() {
-            window.location.href = "/logout";
+            window.location.href = "<?php echo base_url('/logout'); ?> ";
+            //window.location.href = "/logout";
         }
     </script>
 

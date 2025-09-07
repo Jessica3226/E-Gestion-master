@@ -15,6 +15,12 @@ class AjoutController extends BaseController
 
     public function create()
     {
+        $session = session();
+
+        if (!$session->get('is_logged_in')) {
+            return redirect()->to('/login')->with('error', 'Accès non autorisé.');
+        }
+
         return view('ajoutAgent');
     }
 

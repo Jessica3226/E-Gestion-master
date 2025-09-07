@@ -6,6 +6,15 @@ use App\Models\FamilleModel;
 
 class Dashboard extends BaseController
 {
+    protected $agentModel;
+    protected $session;
+
+    public function __construct()
+    {
+        $this->agentModel = new AgentModel();
+        $this->session = session(); // <-- initialisation obligatoire
+    }
+
     public function admin()
     {
         $session = session();
@@ -34,6 +43,33 @@ class Dashboard extends BaseController
         }
 
         return view('dashboard');
+    }
+
+    
+    // Route situation
+    public function situation()
+    {
+        if (!$this->session->get('is_logged_in')) {   // <-- ici is_logged_in au lieu de logged_in
+            return redirect()->to('/login')->with('error', 'Session expirée. Veuillez vous reconnecter.');
+        }
+
+        $agent_id = $this->session->get('agent_id');
+        $data['agent'] = $this->agentModel->find($agent_id);
+
+        return view('situation', $data);
+    }
+
+    // Route certificat
+    public function certificat()
+    {
+        if (!$this->session->get('is_logged_in')) {   // <-- même chose ici
+            return redirect()->to('/login')->with('error', 'Session expirée. Veuillez vous reconnecter.');
+        }
+
+        $agent_id = $this->session->get('agent_id');
+        $data['agent'] = $this->agentModel->find($agent_id);
+
+        return view('certificat', $data);
     }
 
     public function imprimer($id_agent)

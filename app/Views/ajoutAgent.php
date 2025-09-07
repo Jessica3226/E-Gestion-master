@@ -40,7 +40,7 @@
             <div class="form-row">
                 <div>
                     <label for="matricule">IM:</label>
-                    <input type="number" id="matricule" name="matricule" value="<?= isset($agent) ? esc($agent['matricule']) : '' ?>" required>
+                    <input class="form-control" type="number" id="matricule" name="matricule" value="<?= isset($agent) ? esc($agent['matricule']) : '' ?>" required>
                 </div>
                 <div>
                     <label for="corps">Corps:</label>
@@ -62,7 +62,7 @@
             <div class="form-row">
                 <div>
                     <label for="nom">Nom:</label>
-                    <input type="text" id="nom" name="nom" value="<?= isset($agent) ? esc($agent['nom']) : '' ?>" required>
+                    <input type="text" class="form-control" id="nom" name="nom" value="<?= isset($agent) ? esc($agent['nom']) : '' ?>" required>
                 </div>
                 <div>
                     <label for="grade">Grade:</label>
