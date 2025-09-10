@@ -1,196 +1,255 @@
-<?php
-header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
-header("Cache-Control: post-check=0, pre-check=0", false);
-header("Pragma: no-cache");
-?>
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Inscription</title>
-  <link rel="stylesheet" href="style/login.css">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ajout d'un Agent</title>
+  <link href="<?= base_url('style/ajoutAg.css') ?>" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
 
+  <style>
+      body {
+          background: #f5f7fa;
+      }
+      .form-header {
+          background: linear-gradient(135deg, #0052cc, #007bff);
+          color: #fff;
+          padding: 20px;
+          border-radius: 10px 10px 0 0;
+          text-align: center;
+          margin-bottom: 0;
+          position: relative;
+      }
+      .form-container {
+          background: #fff;
+          border-radius: 0 0 10px 10px;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+          padding: 30px;
+      }
+      .form-section {
+          margin-bottom: 25px;
+      }
+      .form-section h5 {
+          margin-bottom: 15px;
+          border-bottom: 2px solid #eee;
+          padding-bottom: 5px;
+          color: #0052cc;
+      }
+      .logo {
+          max-height: 60px;
+          display: block;
+          margin: 0 auto 10px auto;
+      }
+  </style>
 </head>
 <body>
-  <section class="formContainer">
-    <div class="logo-circle">
-      <img src="images/logo.png" alt="Logo">
+
+<?php if (session()->getFlashdata('success')): ?>
+    <div id="notif" class="alert alert-success alert-dismissible fade show position-fixed top-0 end-0 m-3 shadow" role="alert">
+        <?= session()->getFlashdata('success') ?>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
     </div>
-
-    <form id="loginForm" method="post">
-      <h2 class="title">Connexion</h2>
-
-      <!-- Matricule -->
-      <div class="input-container input-group">
-        <span class="input-group-text"><i class="bi bi-person-badge-fill"></i></span>
-        <input type="number" id="matricule" name="matricule" class="form-control" placeholder="Matricule" required>
-      </div>
-
-      <!-- Mot de passe -->
-      <div class="input-container input-group">
-        <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
-        <input type="password" id="password" name="password" class="form-control" placeholder="Mot de Passe" required>
-      </div>
-
-      <button type="submit" class="submit-btn">Se connecter</button>
-
-      <div id="loginError" class="alert alert-danger mt-2 d-none"></div>
-    </form>
-
-    <!-- Modal Bootstrap -->
-    <div class="modal fade" id="choiceModal" tabindex="-1" aria-labelledby="choiceModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Choisissez où aller</h5>
-          </div>
-          <div class="modal-body text-center">
-            <p>Souhaitez-vous aller vers :</p>
-            <div class="d-flex justify-content-around">
-              <button class="btn btn-outline-secondary" id="goProfil">Profil</button>
-              <button class="btn btn-outline-success" id="goDashboard">Dashboard</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <a href="<?= site_url('login') ?>">Login</a>
-
-    <?php if (session()->getFlashdata('error')): ?>
-      <div class="alert alert-danger alert-dismissible fade show" id="autoDismissAlert" role="alert">
-        <?= session()->getFlashdata('error') ?>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-      </div>
-
-      <script>
-        setTimeout(function() {
-          const alert = document.getElementById('autoDismissAlert');
-          if (alert) {
-            alert.classList.remove('show');
-            alert.classList.add('fade');
-            setTimeout(() => alert.remove(), 500);
-          }
-        }, 2000); 
-      </script>
-    <?php endif; ?>
-
-
-  </section>
-
-  <!-- Scripts -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script>
-    document.getElementById('loginForm').addEventListener('submit', function (e) {
-      e.preventDefault();
-
-      const form = e.target;
-      const formData = new FormData(form);
-      const loginError = document.getElementById('loginError');
-      loginError.classList.add('d-none');
-
-      fetch('<?= base_url('/login') ?>', {
-        method: 'POST',
-        body: formData
-      })
-        .then(response => response.json())
-        .then(data => {
-          if (!data.success) {
-            loginError.textContent = data.message;
-            loginError.classList.remove('d-none');
-          } else {
-            const niveau = data.niveau;
-
-            if (niveau == 3) {
-              window.location.href = "<?= base_url('/profil') ?>";
-            } else if (niveau == 1 || niveau == 2) {
-              let modal = new bootstrap.Modal(document.getElementById('choiceModal'));
-              modal.show();
-
-              document.getElementById('goProfil').onclick = () => {
-                fetch('<?= base_url('/auth/check-info') ?>')
-                  .then(response => response.json())
-                  .then(data => {
-                    if (data.complete) {
-                      window.location.href = "<?= base_url('/profil') ?>";
-                    } else {
-                      window.location.href = "<?= base_url('/completer-info') ?>";
-                    }
-                  })
-                  .catch(() => {
-                    // Raha misy erreur any amin'ny serveur dia alefa any amin'ny completer-info
-                    window.location.href = "<?= base_url('/completer-info') ?>";
-                  });
-              };
-
-              document.getElementById('goDashboard').onclick = () => {
-                window.location.href = "<?= base_url('/dashboard') ?>";
-              };
+    <script>
+        setTimeout(() => {
+            let notif = document.getElementById('notif');
+            if (notif) {
+                notif.classList.remove('show');
+                notif.classList.add('fade');
             }
-          }
-        })
-        .catch(err => {
-          loginError.textContent = 'Erreur lors de la connexion.';
-          loginError.classList.remove('d-none');
-        });
-    });
-  </script>
-</body>
-</html>
-
-<?php
-header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
-header("Cache-Control: post-check=0, pre-check=0", false);
-header("Pragma: no-cache");
-?>
-
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inscription</title>
-    <link rel="stylesheet" href="style/login.css">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-
-</head>
-<body>
-    <section class="formContainer">
-        <div class="logo-circle">
-            <img src="images/logo.png" alt="Logo" >
-        </div>
-        <form id="loginForm" action="<?= base_url('/inscrit'); ?>" method="post"> 
-            <h2 class="title">Inscription</h2>
-
-             <!-- Matricule -->
-            <div class="input-container input-group">
-                <span class="input-group-text"><i class="bi bi-person-badge-fill"></i></span>
-                <input type="number" id="matricule" name="matricule" class="form-control" placeholder="Matricule" required>
-            </div>
-
-            <!-- Mot de passe -->
-            <div class="input-container input-group">
-                <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
-                <input type="password" id="password" name="password" class="form-control" placeholder="Mot de Passe" required>
-            </div>
-
-            <button type="submit" class="submit-btn">S'inscrire</button>
-            <p id="errorMessage" class="error-message"></p>
-        </form>
-
-        <a href="<?= site_url('login') ?>">Login</a>
-        
-        <?php if (session()->getFlashdata('error')): ?>
-    <div class="alert alert-danger">
-        <?= session()->getFlashdata('error') ?>
-    </div>
+        }, 3000); // 3 sec
+    </script>
 <?php endif; ?>
 
-    </section>
-    
+<?php if (session()->getFlashdata('error')): ?>
+    <div id="notif" class="alert alert-danger alert-dismissible fade show position-fixed top-0 end-0 m-3 shadow" role="alert">
+        <?= session()->getFlashdata('error') ?>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+    <script>
+        setTimeout(() => {
+            let notif = document.getElementById('notif');
+            if (notif) {
+                notif.classList.remove('show');
+                notif.classList.add('fade');
+            }
+        }, 3000);
+    </script>
+<?php endif; ?>
+
+<div class="container my-5">
+    <div class="form-header">
+        <!-- Logo au-dessus -->
+        <img src="<?= base_url('images/logo-right.png') ?>" alt="Logo" class="logo">
+        <h2>RESSOURCES HUMAINES</h2>
+        <h4>AJOUT D'UN AGENT</h4>
+    </div>
+
+    <div class="form-container">
+        <!-- Flash messages -->
+        <?php if(session()->getFlashdata('errors')): ?>
+            <div class="alert alert-danger">
+                <ul>
+                    <?php foreach(session()->getFlashdata('errors') as $error): ?>
+                        <li><?= esc($error) ?></li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+        <?php endif; ?>
+
+        <?php if(session()->getFlashdata('error')): ?>
+            <div class="alert alert-danger">
+                <?= esc(session()->getFlashdata('error')) ?>
+            </div>
+        <?php endif; ?>
+
+        <?php if(session()->getFlashdata('success')): ?>
+            <div class="alert alert-success">
+                <?= esc(session()->getFlashdata('success')) ?>
+            </div>
+        <?php endif; ?>
+
+        <!-- Formulaire -->
+        <form action="<?= isset($agent) ? base_url('agents/update/' . $agent['id']) : base_url('agent/addAgent') ?>" method="post">
+           
+            <!-- Section Identité -->
+            <div class="form-section">
+                <h5>INFORMATIONS PERSONNELLES</h5>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="matricule" class="form-label">IM</label>
+                        <input class="form-control" type="number" id="matricule" name="matricule" value="<?= isset($agent) ? esc($agent['matricule']) : '' ?>" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="nom" class="form-label">Nom</label>
+                        <input type="text" class="form-control" id="nom" name="nom" value="<?= isset($agent) ? esc($agent['nom']) : '' ?>" required>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="prenom" class="form-label">Prénom</label>
+                        <input type="text" class="form-control" id="prenom" name="prenom" value="<?= isset($agent) ? esc($agent['prenom']) : '' ?>" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="date_naissance" class="form-label">Date de Naissance</label>
+                        <input type="date" id="date_naissance" name="date_naissance" class="form-control" value="<?= isset($agent) ? esc($agent['date_naissance']) : '' ?>" required>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="contact" class="form-label">Contact</label>
+                        <input type="number" class="form-control" id="contact" name="contact" value="<?= isset($agent) ? esc($agent['contact']) : '' ?>" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="cin" class="form-label">CIN</label>
+                        <input type="number" id="cin" name="cin" class="form-control" value="<?= isset($agent) ? esc($agent['cin']) : '' ?>" required>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="situation_matrimoniale" class="form-label">Situation Matrimoniale</label>
+                    <select id="situation_matrimoniale" name="situation_matrimoniale" class="form-select" required>
+                        <option value="">Sélectionnez</option>
+                        <option value="Marié" <?= isset($agent) && $agent['situation_matrimoniale'] == 'Marié' ? 'selected' : '' ?>>Marié</option>
+                        <option value="Celibataire" <?= isset($agent) && $agent['situation_matrimoniale'] == 'Celibataire' ? 'selected' : '' ?>>Célibataire</option>
+                        <option value="Divorcé" <?= isset($agent) && $agent['situation_matrimoniale'] == 'Divorcé' ? 'selected' : '' ?>>Divorcé</option>
+                        <option value="Veuf/Veuve" <?= isset($agent) && $agent['situation_matrimoniale'] == 'Veuf/Veuve' ? 'selected' : '' ?>>Veuf/Veuve</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Section Carrière -->
+            <div class="form-section">
+                <h5>INFORMATIONS PROFESSIONNELLES</h5>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="date_entree" class="form-label">Date d'Entrée</label>
+                        <input type="date" id="date_entree" name="date_entree" class="form-control" value="<?= isset($agent) ? esc($agent['date_entree']) : '' ?>" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="corps" class="form-label">Corps</label>
+                        <select class="form-select" id="corps" name="corps" required>
+                            <option value="">Sélectionnez</option>
+                            <option value="sous-operateur" <?= isset($agent) && $agent['corps'] == 'sous-operateur' ? 'selected' : '' ?>>Sous-Opérateur</option>
+                            <option value="operateur" <?= isset($agent) && $agent['corps'] == 'operateur' ? 'selected' : '' ?>>Opérateur</option>
+                            <option value="encadreur" <?= isset($agent) && $agent['corps'] == 'encadreur' ? 'selected' : '' ?>>Encadreur</option>
+                            <option value="Technicien_Superieur" <?= isset($agent) && $agent['corps'] == 'Technicien_Superieur' ? 'selected' : '' ?>>Technicien Supérieur</option>
+                            <option value="realisateur" <?= isset($agent) && $agent['corps'] == 'realisateur' ? 'selected' : '' ?>>Réalisateur</option>
+                            <option value="planificateur" <?= isset($agent) && $agent['corps'] == 'planificateur' ? 'selected' : '' ?>>Planificateur</option>
+                            <option value="cpci" <?= isset($agent) && $agent['corps'] == 'cpci' ? 'selected' : '' ?>>CPCI</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="grade" class="form-label">Grade</label>
+                        <select id="grade" name="grade" class="form-select" required>
+                            <option value="">Sélectionnez</option>
+                            <option value="1C1E" <?= isset($agent) && $agent['grade'] == '1C1E' ? 'selected' : '' ?>>1C1E</option>
+                            <option value="1C2E" <?= isset($agent) && $agent['grade'] == '1C2E' ? 'selected' : '' ?>>1C2E</option>
+                            <option value="1C3E" <?= isset($agent) && $agent['grade'] == '1C3E' ? 'selected' : '' ?>>1C3E</option>
+                            <option value="2C1E" <?= isset($agent) && $agent['grade'] == '2C1E' ? 'selected' : '' ?>>2C1E</option>
+                            <option value="2C2E" <?= isset($agent) && $agent['grade'] == '2C2E' ? 'selected' : '' ?>>2C2E</option>
+                            <option value="2C3E" <?= isset($agent) && $agent['grade'] == '2C3E' ? 'selected' : '' ?>>2C3E</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="indice" class="form-label">Indice</label>
+                        <input type="number" class="form-control" id="indice" name="indice" value="<?= isset($agent) ? esc($agent['indice']) : '' ?>" required>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="direction" class="form-label">Direction</label>
+                    <select id="direction" name="direction" class="form-select" required>
+                        <option value="">Sélectionnez</option>
+                        <option value="DSI" <?= isset($agent) && $agent['direction'] == 'DSI' ? 'selected' : '' ?>>DSI</option>
+                        <option value="DRH" <?= isset($agent) && $agent['direction'] == 'DRH' ? 'selected' : '' ?>>DRH</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Section Divers -->
+            <div class="form-section">
+                <h5>AUTRES INFORMATIONS</h5>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="qualite" class="form-label">Qualité</label>
+                        <select id="qualite" name="qualite" class="form-select" required>
+                            <option value="">Sélectionnez</option>
+                            <option value="ELD" <?= isset($agent) && $agent['qualite'] == 'ELD' ? 'selected' : '' ?>>ELD</option>
+                            <option value="EFA" <?= isset($agent) && $agent['qualite'] == 'EFA' ? 'selected' : '' ?>>EFA</option>
+                            <option value="HEE" <?= isset($agent) && $agent['qualite'] == 'HEE' ? 'selected' : '' ?>>HEE</option>
+                            <option value="FONCTIONNAIRE" <?= isset($agent) && $agent['qualite'] == 'FONCTIONNAIRE' ? 'selected' : '' ?>>FONCTIONNAIRE</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="localisation" class="form-label">Localisation</label>
+                        <select id="localisation" name="localisation" class="form-select" required>
+                            <option value="">Sélectionnez</option>
+                            <option value="Analamanga" <?= isset($agent) && $agent['localisation'] == 'Analamanga' ? 'selected' : '' ?>>Analamanga</option>
+                            <option value="Antananarivo" <?= isset($agent) && $agent['localisation'] == 'Antananarivo' ? 'selected' : '' ?>>Antananarivo</option>
+                            <option value="Fianarantsoa" <?= isset($agent) && $agent['localisation'] == 'Fianarantsoa' ? 'selected' : '' ?>>Fianarantsoa</option>
+                            <option value="Menabe" <?= isset($agent) && $agent['localisation'] == 'Menabe' ? 'selected' : '' ?>>Menabe</option>
+                            <option value="Boeny" <?= isset($agent) && $agent['localisation'] == 'Boeny' ? 'selected' : '' ?>>Boeny</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+             <!-- Bouton -->
+             <div class="text-end">
+                <button type="submit" class="btn btn-primary px-4">
+                    <i class="bi bi-save me-2"></i> Enregistrer
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
