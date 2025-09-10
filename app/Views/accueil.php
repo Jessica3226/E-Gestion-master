@@ -40,7 +40,7 @@
                 <div class="card card-custom p-4 h-100">
                     <div class="mb-3"><i class="bi bi-graph-up" style="font-size:40px;"></i></div>
                     <h5>Avancement</h5>
-                    <p>Suivez l’évolution de vos carrière.</p>
+                    <p>Suivez l’évolution de votre carrière.</p>
                     <a href="<?= site_url('#') ?>" class="btn">Voir plus</a>
                 </div>
             </div>
