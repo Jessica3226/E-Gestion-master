@@ -17,34 +17,39 @@ class AgentController extends BaseController
 
     public function index()
     {
-        $model = new AgentModel();
-        $perPage = 1; // isa agents isaky ny pejy
-        $data['agents'] = $model->paginate($perPage);
-        $data['pager'] = $model->pager;
-        $data['currentPage'] = $this->request->getVar('page') ?? 1;
         
-        return view('listesAgent', $data);
-    }
+        $model = new AgentModel();
 
+        $critere = $this->request->getGet('tri') ?? 'corps';
 
-    private function calculerEffectifs(array $agents, string $categorie)
-    {
-        $effectifs = [];
-        foreach ($agents as $agent) {
-            $valeur = $agent[$categorie];
-            $effectifs[$valeur] = ($effectifs[$valeur] ?? 0) + 1;
+        $allowed = ['corps', 'grade', 'direction', 'situation_matrimoniale', 'localisation'];
+
+        if (!in_array($critere, $allowed)) {
+            $critere = 'corps';
         }
-        return $effectifs;
+
+        $agents = $model->select("$critere, nom, prenom")
+                        ->orderBy($critere)
+                        ->orderBy('nom')
+                        ->findAll();
+
+        $grouped = [];
+        foreach ($agents as $a) {
+            $grouped[$a[$critere]][] = [
+                'nom' => $a['nom'],
+                'prenom' => $a['prenom']
+            ];
+        }
+
+        return view('grouped', [
+            'critere' => $critere,
+            'grouped' => $grouped
+        ]);
+        return view('listesAgent', $data);
     }
 
     public function create() 
     {
-        // $session = session();
-
-        // if (!$session->get('is_logged_in')) {
-        //     return redirect()->to('/login')->with('error', 'Accès non autorisé.');
-        // }
-
         return view('ajoutAgent');
     }
 
@@ -197,62 +202,9 @@ class AgentController extends BaseController
             ->orLike('nom', $query, 'after')
             ->orLike('prenom', $query, 'after')
         ->groupEnd()
-        ->findAll(20); // Max 20 résultats
+        ->findAll(20);
 
     return $this->response->setJSON($agents);
 }
-
-
-    // public function ajaxSearch(): void
-    // {
-    //     $this->response->setHeader('Content-Type', 'text/html');
-    //     $query = $this->request->getGet('query'); 
-    //     $agentModel = new AgentModel();
-
-    //     // Si une recherche est saisie, on fait un filtre
-    //     if (!empty($query)) {
-    //         $agents = $agentModel
-    //             ->Like('matricule', $query,'after')
-    //             ->orlike('nom', $query, 'after')
-    //             ->orlike( 'prenom', $query, 'after')
-    //             ->orlike('date_naissance', $query, 'after')
-    //             ->orlike('contact', $query, 'after')
-    //             ->orlike( 'cin', $query,'after')
-    //             ->orlike( 'situation_matrimoniale',  $query,'after')
-    //             ->orlike('date_entree', $query, 'after')
-    //             ->orlike('grade', $query, 'after')
-    //             ->orlike('indice', $query, 'after')
-    //             ->orlike('corps', $query, 'after')
-    //             ->orlike('qualite', $query, 'after')
-    //             ->orlike('localisation', $query, 'after')
-    //             ->orlike('direction', $query,'after')
-    //             ->findAll();
-    //     } else {
-    //         $agents = $agentModel->findAll();
-    //     }
-        
-    //      // Génère uniquement le HTML des lignes
-    //     foreach ($agents as $agent) {
-    //         echo "<tr>";
-    //         echo "<td>" . esc($agent['matricule']) . "</td>";
-    //         echo "<td>" . esc($agent['nom']) . "</td>";
-    //         echo "<td>" . esc($agent['prenom']) . "</td>";
-    //         echo "<td>" . esc($agent['date_naissance']) . "</td>";
-    //         echo "<td>" . esc($agent['contact']) . "</td>";
-    //         echo "<td>" . esc($agent['cin']) . "</td>";
-    //         echo "<td>" . esc($agent['situation_matrimoniale']) . "</td>";
-    //         echo "<td>" . esc($agent['date_entree']) . "</td>";
-    //         echo "<td>" . esc($agent['corps']) . "</td>";
-    //         echo "<td>" . esc($agent['grade']) . "</td>";
-    //         echo "<td>" . esc($agent['indice']) . "</td>";
-    //         echo "<td>" . esc($agent['qualite']) . "</td>";
-    //         echo "<td>" . esc($agent['localisation']) . "</td>";
-    //         echo "<td>" . esc($agent['direction']) . "</td>";
-    //         echo "<td>";
-    //                 echo "<a href='/agents/edit/{$agent['id']}' class='edit-btn'>✏️ Modifier</a> ";
-    //                 echo "<a href='/agents/delete/{$agent['id']}' class='delete-btn' onclick='return confirm(\"Confirmer la suppression ?\")'>🗑️ Supprimer</a>";
-    //         echo  "</td>";
-    //         echo "</tr>";
-    //     }
 
 }

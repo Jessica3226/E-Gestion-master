@@ -31,6 +31,7 @@ $routes->get('imprimer/(:num)', 'Dashboard::imprimer/$1');
 
 $routes->get('/ajoutAgent', 'AgentController::create');
 $routes->get('/listesAgent', 'CrudController::listesAgent');
+$routes->get('/grouped', 'AgentController::index');
 $routes->get('/agents/delete/(:num)', 'AgentController::delete/$1');
 $routes->get('agents/edit/(:num)', 'AgentController::edit/$1');
 $routes->post('agents/update/(:num)', 'AgentController::update/$1');
