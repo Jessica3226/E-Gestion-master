@@ -128,7 +128,6 @@ class Auth extends Controller
     $session = session();
 
     if (!$session->get('isLoggedIn')) {
-        // Tsy tafiditra → redirect amin'ny login
         return redirect()->to('/login')->with('error', 'Veuillez vous reconnecter.');
     }
 

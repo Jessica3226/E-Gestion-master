@@ -27,7 +27,8 @@ header("Pragma: no-cache");
             <p>--------------------</p>
             <p>DIRECTION DES RESOURCES HUMAINES</p>
             <p>--------------------</p>
-            <p>Numero : /MJS/SG/DRH</p>
+            <!-- <p>Numero : XXX/MJS/SG/DRH</p> -->
+            <p>Numero : <?= esc($numero) ?></p>
         </div>
     </div>
 

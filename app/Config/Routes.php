@@ -15,8 +15,12 @@ $routes->get('/inscrit', 'Auth::inscrit');
 $routes->post('/inscrit', 'Auth::doInscription');
 
 $routes->get('/profil','Dashboard::admin');
-$routes->get('situation', 'Dashboard::situation');
-$routes->get('certificat', 'Dashboard::certificat');
+// $routes->get('situation', 'Dashboard::situation');
+$routes->get('/situation', 'SituationController::situationAdministrative');
+
+
+$routes->get('certificat', 'CertificatController::imprimer');
+
 $routes->get('/admin/dashboard', 'Dashboard::admin');
 $routes->get('/dashboard', 'Dashboard::user');
 $routes->get('/logout', 'Auth::logout');
@@ -27,6 +31,9 @@ $routes->post('/auth/save-info', 'Auth::saveInfo');
 
 $routes->get('/update-statut/(:segment)/(:segment)', 'Dashboard::updateStatut/$1/$2');
 $routes->get('imprimer/(:num)', 'Dashboard::imprimer/$1');
+
+$routes->get('/contrats', 'SituationController::index');
+$routes->post('/situation-admin/enregistrer', 'SituationController::enregistrer');
 
 
 $routes->get('/ajoutAgent', 'AgentController::create');

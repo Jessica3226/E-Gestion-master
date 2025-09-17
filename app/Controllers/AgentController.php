@@ -3,7 +3,6 @@
 namespace App\Controllers;
 
 use App\Models\AgentModel;
-use App\Models\ArchiveAgentModel;
 use App\Models\ArchiveModel;
 use CodeIgniter\RESTful\ResourceController;
 
@@ -17,11 +16,9 @@ class AgentController extends BaseController
 
     public function index()
     {
-        
         $model = new AgentModel();
 
         $critere = $this->request->getGet('tri') ?? 'corps';
-
         $allowed = ['corps', 'grade', 'direction', 'situation_matrimoniale', 'localisation'];
 
         if (!in_array($critere, $allowed)) {
@@ -45,7 +42,6 @@ class AgentController extends BaseController
             'critere' => $critere,
             'grouped' => $grouped
         ]);
-        return view('listesAgent', $data);
     }
 
     public function create() 
@@ -53,27 +49,26 @@ class AgentController extends BaseController
         return view('ajoutAgent');
     }
 
-        public function addAgent()
+    public function addAgent()
     {
         $agentModel = new AgentModel();
-        $archiveModel = new ArchiveAgentModel();
         $archiveLog = new ArchiveModel();
 
         $data = [
-            'matricule'            => $this->request->getPost('matricule'),
-            'nom'        => $this->request->getPost('nom'),
-            'prenom'     => $this->request->getPost('prenom'),
-            'date_naissance'   => $this->request->getPost('date_naissance'),
-            'contact'          => $this->request->getPost('contact'),
-            'cin'              => $this->request->getPost('cin'),
-            'situation_matrimoniale'=> $this->request->getPost('situation_matrimoniale'),
-            'date_entree'      => $this->request->getPost('date_entree'),
-            'corps'            => $this->request->getPost('corps'),
-            'grade'            => $this->request->getPost('grade'),
-            'indice'            => $this->request->getPost('indice'),
-            'qualite'          => $this->request->getPost('qualite'),
-            'localisation'           => $this->request->getPost('localisation'),
-            'direction'         => $this->request->getPost('direction')
+            'matricule' => $this->request->getPost('matricule'),
+            'nom' => $this->request->getPost('nom'),
+            'prenom' => $this->request->getPost('prenom'),
+            'date_naissance' => $this->request->getPost('date_naissance'),
+            'contact' => $this->request->getPost('contact'),
+            'cin' => $this->request->getPost('cin'),
+            'situation_matrimoniale' => $this->request->getPost('situation_matrimoniale'),
+            'date_entree' => $this->request->getPost('date_entree'),
+            'corps' => $this->request->getPost('corps'),
+            'grade' => $this->request->getPost('grade'),
+            'indice' => $this->request->getPost('indice'),
+            'qualite' => $this->request->getPost('qualite'),
+            'localisation' => $this->request->getPost('localisation'),
+            'direction' => $this->request->getPost('direction')
         ];
         
         $errors = [];
@@ -93,40 +88,33 @@ class AgentController extends BaseController
         }
 
         if ($agentModel->insert($data)) {
-            $agent_id = $agentModel->getInsertID();
-            $data['agent_id'] = $agent_id;
-            $data['date_archivage'] = date('Y-m-d H:i:s');
-    
-            $archiveModel->save($data);
-
             $archiveLog->insert([
                 'user_matricule' => session()->get('matricule'),
                 'agent_matricule' => $data['matricule'],
                 'action' => 'ajout',
                 'details' => json_encode($data),
             ]);
-    
+
             return redirect()->to('/agents')->with('success', 'Agent ajouté avec succès');
         } else {
             return redirect()->back()->with('error', 'Erreur lors de l\'ajout de l\'agent.');
         }
     }
+
     public function edit($id)
     {
-        $agentModel = new AgentModel();
-        $agent = $agentModel->find($id);
-
+        $agent = $this->agentModel->find($id);
+    
         if (!$agent) {
             return redirect()->to('/agents')->with('error', 'Agent non trouvé');
         }
-
+    
         return view('ajoutAgent', ['agent' => $agent]);
     }
 
     public function update($id)
     {
         $agentModel = new AgentModel();
-        $archiveModel = new ArchiveAgentModel();
         $archiveLog = new ArchiveModel();
 
         $oldData = $agentModel->find($id);
@@ -143,15 +131,10 @@ class AgentController extends BaseController
         }
 
         $agentModel->update($id, $newData);
-        
-        $archivedData = $newData;
-        $archivedData['agent_id'] = $id;
-        $archivedData['date_archivage'] = date('Y-m-d H:i:s');
-        $archiveModel->save($archivedData);
 
         // Journal des modifications
         $archiveLog->insert([
-            'agent_matricule' => session()->get('matricule'),
+            'user_matricule' => session()->get('matricule'),
             'agent_matricule' => $oldData['matricule'],
             'action' => 'modification',
             'details' => json_encode([
@@ -160,22 +143,17 @@ class AgentController extends BaseController
             ]),
         ]);
 
-        return redirect()->to('/agents')->with('success', 'Agent modifié avec succès.');
+        return redirect()->to('/listesAgent')->with('success', 'Agent modifié avec succès.');
     }
 
     public function delete($id)
     {
-        $archiveAgent = new ArchiveAgentModel();
         $archiveLog = new ArchiveModel();
 
         $agent = $this->agentModel->find($id);
         if ($agent) {
-            $agent['agent_id'] = $id;
-            $agent['date_archivage'] = date('Y-m-d H:i:s');
-            $archiveAgent->save($agent);
-
             $archiveLog->insert([
-                'agent_matricule' => session()->get('matricule'),
+                'user_matricule' => session()->get('matricule'),
                 'agent_matricule' => $agent['matricule'],
                 'action' => 'suppression',
                 'details' => json_encode($agent),
@@ -187,24 +165,5 @@ class AgentController extends BaseController
 
         return redirect()->to('/agents')->with('error', 'Agent introuvable');
     }
-    public function searchLive()
-{
-    $query = trim($this->request->getGet('query') ?? '');
-    $agentModel = new \App\Models\AgentModel();
-
-    if (strlen($query) < 1) {
-        return $this->response->setJSON([]);
-    }
-
-    $agents = $agentModel
-        ->groupStart()
-            ->like('matricule', $query, 'after')
-            ->orLike('nom', $query, 'after')
-            ->orLike('prenom', $query, 'after')
-        ->groupEnd()
-        ->findAll(20);
-
-    return $this->response->setJSON($agents);
-}
 
 }

@@ -1,10 +1,10 @@
 body {
-    background: #f5f5f5; /* gris clair */
-    color: #222;          /* texte sombre */
+    background: #f5f5f5; 
+    color: #222;  
     font-family: Arial, sans-serif;
 }
 .header {
-    background: #10700d;  /* vert */
+    background: #10700d; 
     padding: 15px 0;
     text-align: center;
 }

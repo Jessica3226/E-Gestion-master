@@ -11,4 +11,5 @@ class ArchiveModel extends Model
     protected $allowedFields = ['user_matricule', 'agent_matricule', 'action', 'details', 'created_at'];
     protected $useTimestamps = false;
     protected $createdField  = 'created_at';
+
 }

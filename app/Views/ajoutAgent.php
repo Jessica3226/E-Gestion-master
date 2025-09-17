@@ -166,8 +166,18 @@
                     <label for="direction" class="form-label">Direction</label>
                     <select id="direction" name="direction" class="form-select" required>
                         <option value="">Sélectionnez</option>
-                        <option value="DSI" <?= isset($agent) && $agent['direction'] == 'DSI' ? 'selected' : '' ?>>DSI</option>
+                        <option value="DGS" <?= isset($agent) && $agent['direction'] == 'DGS' ? 'selected' : '' ?>>DGS</option>
+                        <option value="DGANS" <?= isset($agent) && $agent['direction'] == 'DGANS' ? 'selected' : '' ?>>DG ANS</option>
+                        <option value="DGTAF" <?= isset($agent) && $agent['direction'] == 'DGTAF' ? 'selected' : '' ?>>DG TAFITA</option>
+                        <option value="INJ" <?= isset($agent) && $agent['direction'] == 'INJ' ? 'selected' : '' ?>>INJ</option>
+                        <option value="CRJS" <?= isset($agent) && $agent['direction'] == 'CRJS' ? 'selected' : '' ?>>CRJS</option>
+                        <option value="DAF" <?= isset($agent) && $agent['direction'] == 'DAF' ? 'selected' : '' ?>>DAF</option>
                         <option value="DRH" <?= isset($agent) && $agent['direction'] == 'DRH' ? 'selected' : '' ?>>DRH</option>
+                        <option value="DIL" <?= isset($agent) && $agent['direction'] == 'DIL' ? 'selected' : '' ?>>DIL</option>
+                        <option value="DCAI" <?= isset($agent) && $agent['direction'] == 'DCAI' ? 'selected' : '' ?>>DCAI</option>
+                        <option value="SPCIJ" <?= isset($agent) && $agent['direction'] == 'SPCIJ' ? 'selected' : '' ?>>SPCIJ</option>
+                        <option value="EPQE" <?= isset($agent) && $agent['direction'] == 'EPQE' ? 'selected' : '' ?>>CN-EPQE</option>
+                        <option value="DSI" <?= isset($agent) && $agent['direction'] == 'DRH' ? 'selected' : '' ?>>DSI</option>
                     </select>
                 </div>
             </div>

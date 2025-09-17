@@ -1,5 +1,4 @@
 <?php
-// S’assurer que $critere et $grouped sont définis
 $critere = $critere ?? 'corps';
 $grouped = $grouped ?? [];
 ?>
@@ -8,47 +7,28 @@ $grouped = $grouped ?? [];
 <head>
     <meta charset="UTF-8">
     <title>Liste groupée par <?= ucfirst($critere) ?></title>
+    <link rel="stylesheet" href="<?= base_url('style/grouped.css') ?>">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-        }
-        .category-card {
-            border-radius: 12px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
-        }
-        .category-title {
-            background: #0d6efd;
-            color: white;
-            padding: 10px;
-            border-radius: 12px 12px 0 0;
-            font-weight: bold;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .agent-list {
-            padding: 15px;
-        }
-        .agent-item {
-            padding: 5px 0;
-            border-bottom: 1px solid #eee;
-        }
-        .agent-item:last-child {
-            border-bottom: none;
-        }
-    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body class="container py-5">
+    <div class="mb-3">
+        <a href="/listesAgent" class="btn btn-back">
+            <i class="fas fa-arrow-left"></i> Retour
+        </a>
+    </div>
 
-    <h1 class="mb-4">👥 Liste des Agents groupés par <span class="text-primary"><?= ucfirst($critere) ?></span></h1>
+    <div class="text-center">
+        <h1 class="mb-4">
+            <i class="fas fa-users"></i> Liste des Agents groupés par 
+            <span class="text-dark"><?= ucfirst($critere) ?></span>
+        </h1>
+    </div>
 
-    <!-- Menu de tri -->
     <div class="mb-4">
-        <form method="get">
-            <label class="form-label">Choisir un critère :</label>
-            <select name="tri" class="form-select w-25 d-inline-block" onchange="this.form.submit()">
+        <form method="get" class="d-flex align-items-center gap-2">
+            <label class="form-label mb-0"><i class="fas fa-filter"></i> Choisir un critère :</label>
+            <select name="tri" class="form-select w-auto" onchange="this.form.submit()">
                 <option value="corps" <?= $critere=='corps'?'selected':'' ?>>Corps</option>
                 <option value="grade" <?= $critere=='grade'?'selected':'' ?>>Grade</option>
                 <option value="direction" <?= $critere=='direction'?'selected':'' ?>>Direction</option>
@@ -58,28 +38,34 @@ $grouped = $grouped ?? [];
         </form>
     </div>
 
-    <div class="row">
-        <?php foreach ($grouped as $categorie => $list): ?>
-            <div class="col-md-4">
-                <div class="category-card">
-                    <div class="category-title">
-                        <span><?= esc($categorie) ?: 'Non défini' ?></span>
-                        <span class="badge bg-light text-dark"><?= count($list) ?> agents</span>
-                    </div>
-                    <div class="agent-list">
-                        <?php foreach ($list as $agent): ?>
-                            <div class="agent-item">
-                                <?= esc($agent['nom']) . ' ' . esc($agent['prenom']) ?>
-                            </div>
-                        <?php endforeach; ?>
+    <!-- Grille responsive -->
+    <div class="text-center">
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            <?php foreach ($grouped as $categorie => $list): ?>
+                <div class="col">
+                    <div class="category-card">
+                        <div class="category-title">
+                            <span><i class="fas fa-folder-open"></i> <?= esc($categorie) ?: 'Non défini' ?></span>
+                            <span class="badge bg-light text-dark"><?= count($list) ?> agents</span>
+                        </div>
+                        <div class="agent-list">
+                            <?php foreach ($list as $agent): ?>
+                                <div class="agent-item">
+                                    <i class="fas fa-user"></i>
+                                    <?= esc($agent['nom']) . ' ' . esc($agent['prenom']) ?>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
                     </div>
                 </div>
-            </div>
-        <?php endforeach; ?>
+            <?php endforeach; ?>
+        </div>
     </div>
 
     <?php if (empty($grouped)): ?>
-        <div class="alert alert-warning mt-4">Aucun agent trouvé pour ce critère.</div>
+        <div class="alert alert-warning mt-4">
+            <i class="fas fa-exclamation-triangle"></i> Aucun agent trouvé pour ce critère.
+        </div>
     <?php endif; ?>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>

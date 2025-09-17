@@ -12,81 +12,34 @@
 
     <style>
         html, body {
-            background: linear-gradient(135deg, #a1c4fd, #c2e9fb);
-            font-family: cursive;
+            background: linear-gradient(135deg, #e0f7fa, #c8e6c9); /* Bleu clair → Vert clair */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 0;
         }
 
         .container {
-            margin-top: 40px;
-            max-width: 95%;
+            margin-top: 50px;
+            max-width: 98%;
         }
 
         h1 {
             text-align: center;
-            margin-bottom: 20px;
-            color: #333;
-        }
-
-        table {
-            border-collapse: separate;
-            text-align: center;
-            border-spacing: 0 15px;
-        }
-
-        table thead {
-            background-color: rgba(0, 123, 255, 0.9);
-            color: white;
-        }
-
-        table tbody tr {
-            background-color: transparent !important; 
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            border-radius: 16px;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-        }
-
-        table tbody tr:hover {
-            background-color: rgba(255, 255, 255, 0.2);
-            transform: scale(1.02); 
-        }
-
-        table tbody td {
-            background-color: transparent !important;
-            padding: 16px;
-            border: none;
-            word-wrap: break-word;
-            word-break: break-word;
-            white-space: normal;
-        }
-
-        .modif-details {
-            font-size: 0.9em;
-            margin-top: 5px;
-        }
-
-        .avant {
-            color: red;
-        }
-
-        .apres {
-            color: green;
+            margin-bottom: 30px;
+            color: #0d6efd;
+            font-weight: 700;
         }
 
         .header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 20px;
+            margin-bottom: 30px;
         }
 
-        .logo-left {
-            width: 15%;
-        }
-
-        .logo-right {
-            width: 8%;
+        .logo-left, .logo-right {
+            max-height: 60px;
+            object-fit: contain;
         }
 
         .form-header {
@@ -96,46 +49,106 @@
             margin-bottom: 20px;
         }
 
+        .back-button, .btn-danger {
+            border-radius: 12px;
+            font-weight: 600;
+            padding: 10px 18px;
+            transition: all 0.3s ease;
+        }
+
         .back-button {
-            background-color: #007bff;
-            border: none;
+            background-color: #0d6efd;
             color: white;
-            padding: 10px 20px;
-            border-radius: 10px;
-            font-weight: bold;
-            transition: background-color 0.3s ease;
+            border: none;
         }
 
         .back-button:hover {
-            background-color: #0056b3;
+            background-color: #0b5ed7;
         }
 
         .btn-danger {
-            border-radius: 10px;
+            background-color: #dc3545;
+            color: white;
+            border: none;
+        }
+
+        .btn-danger:hover {
+            background-color: #bb2d3b;
+        }
+
+        table {
+            border-collapse: separate;
+            border-spacing: 0 15px;
+        }
+
+        table thead th {
+            background-color: #0d6efd;
+            color: white;
+            border-radius: 12px;
+            padding: 12px;
+            text-align: center;
+        }
+
+        table tbody tr {
+            background-color: #ffffff;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border-radius: 12px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        table tbody tr:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        table tbody td {
+            padding: 16px;
+            text-align: center;
+            vertical-align: middle;
+            word-break: break-word;
+        }
+
+        .modif-details {
+            font-size: 0.9em;
+            margin-top: 5px;
+            text-align: left;
+        }
+
+        .avant {
+            color: #dc3545;
+            font-weight: 600;
+        }
+
+        .apres {
+            color: #28a745;
+            font-weight: 600;
         }
 
         @media (max-width: 768px) {
-            .logo-left, .logo-right {
-                width: 20%;
-            }
-
             h1 {
-                font-size: 24px;
+                font-size: 22px;
+            }
+            .header img {
+                max-height: 50px;
+            }
+            .back-button, .btn-danger {
+                padding: 8px 14px;
+                font-size: 0.9em;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- En-tête avec logos -->
-    <div class="header container">
-        <img src="images/logo-left.png" alt="Logo Gauche" class="logo-left">
-        <h1>Archive sur les agents</h1>
-        <img src="images/logo-right.png" alt="Logo Droite" class="logo-right">
-    </div>
-
     <div class="container">
-        <!-- Formulaires header : Retour + Supprimer tout -->
+        <!-- Header logos + titre -->
+        <div class="header">
+            <img src="images/logo-left.png" alt="Logo Gauche" class="logo-left">
+            <h1>Historique des actions sur les agents</h1>
+            <img src="images/logo-right.png" alt="Logo Droite" class="logo-right">
+        </div>
+
+        <!-- Form header : retour + supprimer tout -->
         <div class="form-header">
             <form action="/dashboard" method="get">
                 <button class="back-button"><i class="fas fa-arrow-left"></i> Retour</button>
@@ -148,12 +161,12 @@
 
         <!-- Tableau des logs -->
         <div class="table-responsive">
-            <table class="table table-bordered align-middle">
+            <table class="table table-borderless align-middle">
                 <thead>
                     <tr>
                         <th>Résumé de l’action</th>
                         <th>Date</th>
-                        <th>Action</th> 
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -165,7 +178,7 @@
                                 <td>
                                     <?php
                                         $action = $archive['action'];
-                                        $utilisateur = esc($archive['agent_matricule']);
+                                        $utilisateur = esc($archive['user_matricule']);
                                         $agent = esc($archive['agent_matricule']);
                                         $details = json_decode($archive['details'], true);
 
@@ -182,7 +195,6 @@
 
                                             foreach ($avant as $champ => $valeurAvant) {
                                                 $valeurApres = $apres[$champ] ?? null;
-
                                                 if ($valeurAvant != $valeurApres) {
                                                     echo "<div><strong>$champ</strong> : ";
                                                     echo "<span class='avant'>« $valeurAvant »</span> → ";

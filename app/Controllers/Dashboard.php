@@ -12,7 +12,7 @@ class Dashboard extends BaseController
     public function __construct()
     {
         $this->agentModel = new AgentModel();
-        $this->session = session(); // <-- initialisation obligatoire
+        $this->session = session(); 
     }
 
     public function admin()
@@ -25,7 +25,6 @@ class Dashboard extends BaseController
         
         $agent_id = $session->get('agent_id');
 
-        // Récupère les infos de l'agent
         $agentModel = new AgentModel();
         $agent = $agentModel->find($agent_id);
 
@@ -45,11 +44,9 @@ class Dashboard extends BaseController
         return view('dashboard');
     }
 
-    
-    // Route situation
     public function situation()
     {
-        if (!$this->session->get('is_logged_in')) {   // <-- ici is_logged_in au lieu de logged_in
+        if (!$this->session->get('is_logged_in')) {  
             return redirect()->to('/login')->with('error', 'Session expirée. Veuillez vous reconnecter.');
         }
 
@@ -59,10 +56,9 @@ class Dashboard extends BaseController
         return view('situation', $data);
     }
 
-    // Route certificat
     public function certificat()
     {
-        if (!$this->session->get('is_logged_in')) {   // <-- même chose ici
+        if (!$this->session->get('is_logged_in')) {  
             return redirect()->to('/login')->with('error', 'Session expirée. Veuillez vous reconnecter.');
         }
 
@@ -89,7 +85,6 @@ class Dashboard extends BaseController
         $numero_formatte = $numero_auto . '-' . date('Y') . '/MIN-JS';
         $certificatModel->update($insert_id, ['numero_formatte' => $numero_formatte]);
 
-        // 3. Maka data agent sy archives
         $agent = $agentModel->find($id_agent);
         $historiques = $archiveModel->where('id_agent', $id_agent)->orderBy('date_debut', 'ASC')->findAll();
 
