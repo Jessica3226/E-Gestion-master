@@ -2,141 +2,144 @@
 namespace App\Controllers;
 
 use App\Models\FamilleModel;
-use CodeIgniter\HTTP\ResponseInterface;
+use App\Models\AgentModel;
+use App\Models\ArchiveModel;
 
 class FamilleController extends BaseController {
+
     protected $familleModel;
+    protected $agentModel;
+    protected $archiveModel;
 
     public function __construct() {
         $this->familleModel = new FamilleModel();
+        $this->agentModel = new AgentModel();
+        $this->archiveModel = new ArchiveModel();
     }
 
-    public function cre()
-    {
-        return view('familleAgent');
+    public function cre() {
+        $familles = $this->familleModel->findAll();
+        return view('familleAgent', [
+            'famille' => $familles
+        ]);
     }
 
-    public function auth()
-    {
+    public function index() {
+        return view('ajoutFamille'); 
+    }
+
+    public function store() {
         $matricule = $this->request->getPost('matricule');
+        $nom       = $this->request->getPost('nom_famille');
+        $prenom    = $this->request->getPost('prenom');
+        $dateNaiss = $this->request->getPost('date_naissance');
+        $relation  = $this->request->getPost('relation');
+        $contact   = $this->request->getPost('contact');
 
-        $familleModel = new FamilleModel();
-
-        if ($familleModel->matriculeExists($matricule)) {
-            // Matricule valide - créer la session
-            session()->set('matricule', $matricule);
-            return redirect()->to('/famille/dashboard');
-        } else {
-            // Matricule invalide - message d'erreur
-            session()->setFlashdata('error', 'Matricule invalide.');
-            return redirect()->to('/famille/login');
+        $agent = $this->agentModel->where('matricule', $matricule)->first();
+        if (!$agent) {
+            return redirect()->back()->withInput()->with('error', "Le matricule $matricule n'existe pas !");
         }
-    }
 
-    public function dashboard()
-    {
-        $famille = [];
-    
-        if (session()->has('matricule')) {
-            $matricule = session('matricule');
-            $famille = $this->familleModel->where('matricule', $matricule)->findAll();
-        }
-    
-        return view('familleAgent', ['famille' => $famille]);
-    }
-    
+        if (in_array($relation, ['Conjoint', 'Conjointe'])) {
+            $existeConjoint = $this->familleModel
+                ->where('matricule', $matricule)
+                ->groupStart()
+                    ->where('relation', 'Conjoint')
+                    ->orWhere('relation', 'Conjointe')
+                ->groupEnd()
+                ->first();
 
-    // Créer un nouveau membre de famille
-    public function store()
-    {
-        $model = new FamilleModel();
-
-        $matricule = $this->request->getPost('matricule');
-        $relation = $this->request->getPost('relation');
-
-        // Vérifier si relation est Conjoint ou Conjointe
-        if ($relation === 'Conjoint' || $relation === 'Conjointe') {
-            $countConjoint = $this->familleModel
-                                ->where('matricule', $matricule)
-                                ->whereIn('relation', ['Conjoint', 'Conjointe'])
-                                ->countAllResults();
-
-            if ($countConjoint > 0) {
-                // Ici on peut retourner une erreur avec alert JS via session flashdata
-                return redirect()->back()
-                    ->withInput()
-                    ->with('error', 'Un agent ne peut avoir qu\'un seul conjoint/conjointe.')
-                    ->with('alert_time', 2000); // temps en ms
+            if ($existeConjoint) {
+                return redirect()->back()->withInput()->with('error', "L'agent avec matricule $matricule a déjà un conjoint/conjointe !");
             }
         }
 
         $data = [
-            'matricule'       => $this->request->getPost('matricule'),
+            'matricule'      => $matricule,
+            'nom_famille'    => $nom,
+            'prenom'         => $prenom,
+            'date_naissance' => $dateNaiss,
+            'relation'       => $relation,
+            'contact'        => $contact,
+            'created_at'     => date('Y-m-d H:i:s')
+        ];
+
+        $this->familleModel->insert($data);
+
+        $this->archiveModel->insert([
+            'user_matricule'  => session()->get('user_matricule') ?? 'SYSTEM',
+            'agent_matricule' => $matricule,
+            'action'          => 'ajout',
+            'details'         => json_encode($data),
+            'created_at'      => date('Y-m-d H:i:s')
+        ]);
+
+        return redirect()->to('/familleAgent')->with('success', 'Membre ajouté avec succès !');
+    }
+
+    public function edit($id) {
+        $famille = $this->familleModel->find($id);
+        if (!$famille) {
+            return redirect()->to('/familleAgent')->with('error', 'Membre non trouvé.');
+        }
+
+        $agent = $this->agentModel->where('matricule', $famille['matricule'])->first();
+
+        return view('ajoutFamille', [
+            'famille' => $famille,
+            'agent'   => $agent
+        ]);
+    }
+
+    public function update($id) {
+        
+        $archiveLog = new ArchiveModel();
+        $familleModel = $this->familleModel;
+    
+        $oldData = $familleModel->find($id);
+        $newData = $this->request->getPost();
+    
+        $apres = [
             'nom_famille'    => $this->request->getPost('nom_famille'),
             'prenom'         => $this->request->getPost('prenom'),
             'date_naissance' => $this->request->getPost('date_naissance'),
             'relation'       => $this->request->getPost('relation'),
             'contact'        => $this->request->getPost('contact')
         ];
-
-        if ($model->insert($data)) {
-            return redirect()->to('/familles')->with('success', 'Famille ajoutée avec succès.');
-        } else {
-            return redirect()->back()->withInput()->with('errors', $model->errors());
-        }
-    }
-
-    public function index()
-    {
-        return view('ajoutFamille'); 
+    
+        $familleModel->update($id, $apres);
+    
+        $archiveLog->insert([
+            'user_matricule' => session()->get('matricule'),
+            'agent_matricule' => $oldData['matricule'],
+            'action' => 'modification',
+            'details' => json_encode([
+                'avant' => $oldData,
+                'apres' => $newData,
+            ]),
+        ]);
+    
+        return redirect()->to('/familleAgent')->with('success', 'Membre modifié avec succès !');
     }
     
-    public function edit($id)
-    {   
-        $famille = new FamilleModel();
-        $fami = $famille->find($id);
 
-        if (!$fami) {
-            return redirect()->to('/familles')->with('error', 'Agent non trouvé.');
+    public function delete($id) {
+        $famille = $this->familleModel->find($id);
+        if (!$famille) {
+            return redirect()->to('/familleAgent')->with('error', 'Membre non trouvé.');
         }
 
-        return view('familles/edit', ['fami' => $fami]); 
-    }
+        $this->familleModel->delete($id);
 
-    public function update($id)
-    {
-        $famille = new FamilleModel();
+        $this->archiveModel->insert([
+            'user_matricule'  => session()->get('user_matricule') ?? 'SYSTEM',
+            'agent_matricule' => $famille['matricule'],
+            'action'          => 'suppression',
+            'details'         => json_encode($famille),
+            'created_at'      => date('Y-m-d H:i:s')
+        ]);
 
-        $data = [
-            'nom_famille'    => $this->request->getPost('nom_famille'),
-            'prenom'         => $this->request->getPost('prenom'),
-            'date_naissance' => $this->request->getPost('date_naissance'),
-            'relation'       => $this->request->getPost('relation'),
-            'contact'        => $this->request->getPost('contact'),
-        ];
-
-        if (!$famille->validate($data)) {
-            return redirect()->back()->withInput()->with('errors', $famille->errors());
-        }
-
-        $famille->update($id, $data);
-
-        return redirect()->to('/familles')->with('success', 'Famille modifiée avec succès.');
-    }
-
-
-
-    public function delete($id)
-    {
-        $famille = new FamilleModel();
-        $famille->delete($id);
-
-        return redirect()->to('familles');
-    }
-
-    public function logout()
-    {
-        session()->remove('matricule'); 
-        return redirect()->to('/familleAgent');
+        return redirect()->to('/familleAgent')->with('success', 'Membre supprimé avec succès.');
     }
 }

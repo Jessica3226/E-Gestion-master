@@ -14,10 +14,19 @@ class SituationController extends Controller
 
     public function enregistrer()
     {
-        $model = new SituationAdminModel();
+        $situationModel = new SituationAdminModel();
+        $agentModel = new AgentModel();
 
+        $matricule = $this->request->getPost('agent_matricule');
+
+        $agent = $agentModel->where('matricule', $matricule)->first();
+
+        if (!$agent) {
+            return redirect()->back()->withInput()->with('error', "Le matricule $matricule n'existe pas !");
+        }
+        
         $data = [
-            'agent_matricule' => $this->request->getPost('agent_matricule'),
+            'agent_matricule' => $matricule,
             'date_debut'      => $this->request->getPost('date_debut'),
             'date_fin'        => $this->request->getPost('date_fin'),
             'corps'           => $this->request->getPost('corps'),
@@ -27,14 +36,15 @@ class SituationController extends Controller
             'created_at'      => date('Y-m-d H:i:s')
         ];
 
-        $model->insert($data);
+        $situationModel->insert($data);
 
-        return redirect()->to('/contrats')->with('success', 'Contrat ajouté avec succès');
+        return redirect()->to('/contrats')->with('success', 'Situation administrative ajoutée avec succès');
     }
+
 
     public function situationAdministrative()
     {
-        $matricule = session()->get('matricule'); // matricule de l'agent connecté
+        $matricule = session()->get('matricule'); 
         $situationModel = new SituationAdminModel();
         $agentModel = new AgentModel();
     

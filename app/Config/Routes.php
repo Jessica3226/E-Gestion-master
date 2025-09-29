@@ -15,7 +15,7 @@ $routes->get('/inscrit', 'Auth::inscrit');
 $routes->post('/inscrit', 'Auth::doInscription');
 
 $routes->get('/profil','Dashboard::admin');
-// $routes->get('situation', 'Dashboard::situation');
+$routes->get('/dashboard', 'Dashboard::index');
 $routes->get('/situation', 'SituationController::situationAdministrative');
 
 
@@ -37,7 +37,7 @@ $routes->post('/situation-admin/enregistrer', 'SituationController::enregistrer'
 
 
 $routes->get('/ajoutAgent', 'AgentController::create');
-$routes->get('/listesAgent', 'CrudController::listesAgent');
+$routes->get('/listesAgent', 'AgentController::listesAgent');
 $routes->get('/grouped', 'AgentController::index');
 $routes->get('/agents/delete/(:num)', 'AgentController::delete/$1');
 $routes->get('agents/edit/(:num)', 'AgentController::edit/$1');
@@ -64,26 +64,16 @@ $routes->get('agentcontroller/testinsert', 'AgentController::testInsert');
     // $routes->post('agents/store', 'AjoutController::store');
     // $routes->post('agent/addAgent', 'AjoutController::store');
 
-$routes->match(['get', 'post'],'/familleAgent', 'FamilleController::cre');
-$routes->get('famille/create', 'FamilleController::create');
-$routes->post('/familleAgent/store', 'FamilleController::store');
-$routes->post('/famille/auth', 'FamilleController::auth');
-$routes->get('/famille/dashboard', 'FamilleController::dashboard');
-$routes->get('famille/logout', 'FamilleController::logout');
-
-$routes->get('/famille/ajouter', 'FamilleController::index');
-$routes->get('/familles/edit/(:num)', 'FamilleController::edit/$1');
-$routes->post('/familles/update/(:num)', 'FamilleController::update/$1');
-$routes->get('/familles/delete/(:num)', 'FamilleController::delete/$1');
-
+    $routes->match(['get', 'post'],'/familleAgent', 'FamilleController::cre');
+    $routes->post('/familleAgent/store', 'FamilleController::store');
+    $routes->get('/famille/ajouter', 'FamilleController::index');
+    $routes->get('/familles/edit/(:num)', 'FamilleController::edit/$1');
+    $routes->post('/familles/update/(:num)', 'FamilleController::update/$1');
+    $routes->get('/familles/delete/(:num)', 'FamilleController::delete/$1');
+    
 // Routes pour les archives 
 $routes->get('/archivesAgent', 'ArchiveController::index');
 $routes->get('/archives', 'ArchiveController::index');
-$routes->get('/archives/create', 'ArchiveController::create');
-$routes->post('/archives/store', 'ArchiveController::store');
-$routes->get('/archives/edit/(:num)', 'ArchiveController::edit/$1');
-$routes->post('/archives/update/(:num)', 'ArchiveController::update/$1');
-$routes->get('/archives/delete/(:num)', 'ArchiveController::delete/$1');
-$routes->post('items/deleteAll', 'ArchiveController::deleteAll');
-
+$routes->post('/archives/delete/(:num)', 'ArchiveController::delete/$1');
+$routes->post('/archives/deleteAll', 'ArchiveController::deleteAll');
 

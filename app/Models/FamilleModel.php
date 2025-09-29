@@ -21,9 +21,6 @@ class FamilleModel extends Model
     protected $updatedField     = 'updated_at';
     protected $deletedField     = 'deleted_at';
     
-    /*
-     * Règles de validation
-     */
     protected $validationRules = [
         'matricule'      => 'required|is_natural_no_zero', 
         'nom_famille'   => 'required|max_length[50]',
@@ -33,7 +30,6 @@ class FamilleModel extends Model
         'contact'       => 'required|regex_match[/^[0-9]{10}$/]'
     ];
 
-    // Définir des messages d'erreur personnalisés
     protected $validationMessages = [
         'matricule' => [
             'required' => 'L\'ID de l\'agent est requis.',

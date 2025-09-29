@@ -1,11 +1,9 @@
-<!-- app/Views/auth/completer_info.php -->
 <!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
   <title>Compléter les informations</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- Bootstrap CSS & Icons -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 
@@ -60,13 +58,13 @@
       <!-- Email input -->
       <div class="input-group mb-3">
         <span class="input-group-text"><i class="bi bi-envelope-fill"></i></span>
-        <input type="email" name="email" class="form-control" value="<?= esc($agent['email'] ?? '') ?>" placeholder="Votre adresse email" required>
+        <input type="email" name="email" class="form-control" value="<?= isset($agent) ? esc($agent['email']) : '' ?>" required>
       </div>
 
       <!-- Adresse input -->
       <div class="input-group mb-4">
         <span class="input-group-text"><i class="bi bi-geo-alt-fill"></i></span>
-        <input type="text" name="adresse" class="form-control" value="<?= esc($agent['adresse'] ?? '') ?>" placeholder="Votre adresse postale" required>
+        <input type="text" name="adresse" class="form-control" value="<?= isset($agent) ? esc($agent['adresse']) : '' ?>" required>
       </div>
 
       <div class="d-grid">

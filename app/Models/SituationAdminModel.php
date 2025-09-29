@@ -10,8 +10,6 @@ class SituationAdminModel extends Model
         'agent_matricule', 'date_debut', 'date_fin', 
         'corps', 'cat', 'grade', 'acte'
     ];
-
-    // Gestion auto created_at / updated_at
     protected $useTimestamps = true;
     protected $createdField  = 'created_at';
     protected $updatedField  = 'updated_at';

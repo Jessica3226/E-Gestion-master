@@ -1,222 +1,114 @@
-<?php
-header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
-header("Cache-Control: post-check=0, pre-check=0", false);
-header("Pragma: no-cache");
-?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Dashboard Recensement</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-  <style>
-    body {
-      background: #f4f6f9;
-      margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-
-    .header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 15px 30px;
-      background: #10700d;
-      color: white;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    }
-
-    .header h1 {
-      margin: 0;
-      font-size: 1.8rem;
-      text-align: center;
-    }
-
-    .logo-left, .logo-right {
-      height: 50px;
-    }
-
-    .logout-btn {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      background: #10700d;
-      color: white;
-      border: none;
-      padding: 8px 15px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: bold;
-      transition: 0.3s;
-    }
-
-    .logout-btn:hover {
-      background: #0a4e09;
-    }
-
-    .dashboard-box {
-      padding: 40px 30px;
-    }
-
-    .dashboard-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 25px;
-    }
-
-    .card-dashboard {
-      background: #fff;
-      border-radius: 15px;
-      padding: 25px 20px;
-      text-align: center;
-      box-shadow: 0 6px 12px rgba(0,0,0,0.1);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      position: relative;
-    }
-
-    .card-dashboard:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 12px 24px rgba(0,0,0,0.2);
-    }
-
-    .circle {
-      width: 80px;
-      height: 80px;
-      background: #10700d;
-      border-radius: 50%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin: 0 auto 15px;
-      color: white;
-      font-size: 1.8rem;
-    }
-
-    .card-dashboard h5 {
-      font-size: 1.1rem;
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
-
-    .card-dashboard p {
-      font-size: 0.9rem;
-      color: #555;
-      margin-bottom: 15px;
-    }
-
-    .cta-btn {
-      display: inline-block;
-      background-color: #3498db;
-      color: white;
-      padding: 8px 16px;
-      border-radius: 6px;
-      text-decoration: none;
-      font-weight: bold;
-      transition: background-color 0.2s ease;
-    }
-
-    .cta-btn:hover {
-      background-color: #2980b9;
-    }
-
-    @media (max-width: 768px) {
-      .dashboard-box {
-        padding: 20px;
-      }
-
-      .circle {
-        width: 70px;
-        height: 70px;
-        font-size: 1.5rem;
-      }
-
-      .cta-btn {
-        padding: 6px 12px;
-        font-size: 0.9rem;
-      }
-    }
-  </style>
+  <title>Tableau de bord RH</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="<?= base_url('style/dash.css') ?>">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
 
-  <div class="header">
-    <img src="images/logo-left.png" alt="Logo Gauche" class="logo-left">
-    <h1>RECENSEMENT</h1>
-    <img src="images/logo-right.png" alt="Logo Droite" class="logo-right">
-  </div>
+<div class="container-fluid p-4">
 
-  <button class="logout-btn" onclick="logoutUser()"><i class="fas fa-sign-out-alt"></i> Déconnexion</button>
-
-  <div class="dashboard-box">
-    <div class="row mb-4">
-    <!-- Contrats signés -->
-    <div class="col-md-6 col-lg-3">
-      <div class="card-dashboard">
-        <div class="circle"><i class="fas fa-file-contract"></i></div>
-        <h5>Contrats signés</h5>
-        <p><strong>128</strong> contrats enregistrés</p>
-      </div>
-    </div>
-
-    <!-- Agents connectés -->
-    <div class="col-md-6 col-lg-3">
-      <div class="card-dashboard">
-        <div class="circle"><i class="fas fa-user-check"></i></div>
-        <h5>Agents connectés</h5>
-        <p><strong>34</strong> agents en ligne</p>
-      </div>
+  <div class="dashboard-header d-flex justify-content-between align-items-center mb-4">
+    <h2 class="mb-0"><img src="images/logo-left.png" alt="Logo Gauche" class="logo-left"> Tableau de bord RH</h2>
+    <div class="d-flex align-items-center gap-2">
+      <input type="text" id="searchGlobal" class="form-control form-control-sm" placeholder="Rechercher...">
+      <button class="btn btn-light btn-sm" id="btnExport"><i class="fas fa-file-export"></i> Export</button>
+      <button class="logout-btn" onclick="logoutUser()"><i class="fas fa-sign-out-alt"></i> Déconnexion</button>
     </div>
   </div>
 
-    <div class="dashboard-grid">
-      <!-- Agent -->
-      <div class="card-dashboard">
-        <div class="circle"><i class="fas fa-user-plus"></i></div>
-        <h5>Agent</h5>
-        <p>Ajouter un nouvel agent dans le système.</p>
-        <a href="/ajoutAgent" class="cta-btn">Accéder</a>
+  <div class="row">
+    <div class="col-lg-9">
+      <div class="row g-3 mb-4">
+        <div class="col-md-3">
+          <div class="card stats-card text-center p-3">
+            <h5><i class="fas fa-user-check"></i> Agents actifs</h5>
+            <h3 class="text-success">
+              <?= $agentsActifs > 0 ? $agentsActifs : 'Aucun agent connecté' ?>
+            </h3>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card stats-card text-center p-3">
+            <h5><i class="fas fa-file-contract"></i> Contrats</h5>
+            <h6>En cours : <span class="text-success"><?= $contratsEnCours ?></span></h6>
+            <h6>Expirés : <span class="text-danger"><?= $contratsExpires ?></span></h6>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card stats-card text-center p-3">
+            <h5><i class="fas fa-users"></i> Familles liées</h5>
+            <h3 class="text-primary"><?= $famillesLiees ?></h3>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card stats-card text-center p-3">
+            <h5><i class="fas fa-archive"></i> Archives récentes</h5>
+            <h3 class="text-secondary"><?= $archivesRecentes ?></h3>
+          </div>
+        </div>
       </div>
 
-      <!-- Familles -->
-      <div class="card-dashboard">
-        <div class="circle"><i class="fas fa-people-roof"></i></div>
-        <h5>Familles</h5>
-        <p>Gérer les informations des familles des agents.</p>
-        <a href="/familleAgent" class="cta-btn">Accéder</a>
+      <!-- ZONE DYNAMIQUE -->
+      <div class="card shadow-sm mb-4">
+        <div class="card-header" style="background-color: #10700d; color: white;">Zone dynamique</div>
+        <div class="card-body">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">Derniers agents ajoutés :
+              <ul>
+                <?php foreach($derniersAgents as $a): ?>
+                  <li><?= esc($a['nom']) ?> <?= esc($a['prenom']) ?></li>
+                <?php endforeach; ?>
+              </ul>
+            </li>
+            <li class="list-group-item">Contrats proches expiration : <strong><?= count($contratsAlertes) ?></strong></li>
+            <li class="list-group-item">Familles incomplètes : <strong><?= count($famillesIncompletes) ?></strong></li>
+            <li class="list-group-item">Historique situations : <strong><?= count($historiqueSituations) ?></strong></li>
+          </ul>
+        </div>
       </div>
 
-      <!-- Liste -->
-      <div class="card-dashboard">
-        <div class="circle"><i class="fas fa-list"></i></div>
-        <h5>Liste</h5>
-        <p>Consulter la liste complète des agents.</p>
-        <a href="/listesAgent" class="cta-btn">Accéder</a>
-      </div>
+    </div>
 
-      <!-- Archives -->
-      <div class="card-dashboard">
-        <div class="circle"><i class="fas fa-box-archive"></i></div>
-        <h5>Archives</h5>
-        <p>Accéder aux archives des données enregistrées.</p>
-        <a href="/archivesAgent" class="cta-btn">Accéder</a>
-      </div>
-
-      <!-- Contrat -->
-      <div class="card-dashboard">
-        <div class="circle"><i class="fas fa-file-signature"></i></div>
-        <h5>Contrat</h5>
-        <p>Ajouter des contrats des agents dans le système.</p>
-        <a href="/contrats" class="cta-btn">Accéder</a>
+    <div class="col-lg-3">
+      <div class="sidebar">
+        <div class="module"><i class="fas fa-user"></i> <a href="/ajoutAgent" >Agents</a><br><small>Ajouter des agents</small></div>
+        <div class="module"><i class="fas fa-users"></i><a href="/familleAgent" >Famille</a> <br><small>Gestion des membres liés</small></div>
+        <div class="module"><i class="fas fa-list"></i><a href="/listesAgent" >Listes</a>  <br><small>Modification, suppression, contrats</small></div>
+        <div class="module"><i class="fas fa-archive"></i> <a href="/archivesAgent" >Archives</a> <br><small>Consultation, suppression</small></div>
       </div>
     </div>
   </div>
+</div>
 
-  <script>
-    function logoutUser() {
-      window.location.href = "<?php echo base_url('/logout'); ?>";
-    }
-  </script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  document.getElementById('searchGlobal').addEventListener('input', function() {
+    let val = this.value.toLowerCase();
+    document.querySelectorAll('.list-group-item, .stats-card').forEach(el => {
+      el.style.display = el.innerText.toLowerCase().includes(val) ? '' : 'none';
+    });
+  });
 
+  document.getElementById('btnExport').addEventListener('click', function() {
+    const data = {
+      agentsActifs: <?= $agentsActifs ?>,
+      contratsEnCours: <?= $contratsEnCours ?>,
+      contratsExpires: <?= $contratsExpires ?>,
+      famillesLiees: <?= $famillesLiees ?>
+    };
+    const blob = new Blob([JSON.stringify(data, null, 2)], {type: "application/json"});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "dashboard_export.json"; 
+    a.click();
+    URL.revokeObjectURL(url);
+  });
+</script>
 </body>
 </html>

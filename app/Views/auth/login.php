@@ -58,7 +58,7 @@ header("Pragma: no-cache");
         </div>
       </div>
     </div>
-
+    <a>Mot de passe oublié?</a>
     <a href="<?= site_url('inscrit') ?>">S'inscrire</a>
 
     <?php if (session()->getFlashdata('error')): ?>
@@ -82,62 +82,53 @@ header("Pragma: no-cache");
 
   </section>
 
-  <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script>
     document.getElementById('loginForm').addEventListener('submit', function (e) {
-      e.preventDefault();
+    e.preventDefault();
 
-      const form = e.target;
-      const formData = new FormData(form);
-      const loginError = document.getElementById('loginError');
-      loginError.classList.add('d-none');
+    const form = e.target;
+    const formData = new FormData(form);
+    const loginError = document.getElementById('loginError');
+    loginError.classList.add('d-none');
 
-      fetch('<?= base_url('/login') ?>', {
-        method: 'POST',
-        body: formData
-      })
-        .then(response => response.json())
-        .then(data => {
-          if (!data.success) {
-            loginError.textContent = data.message;
-            loginError.classList.remove('d-none');
-          } else {
-            const niveau = data.niveau;
+    fetch('<?= base_url('/login') ?>', {
+      method: 'POST',
+      body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (!data.success) {
+        loginError.textContent = data.message;
+        loginError.classList.remove('d-none');
+      } else {
+        const niveau = data.niveau;
 
-            if (niveau == 3) {
-              window.location.href = "<?= base_url('/profil') ?>";
-            } else if (niveau == 1 || niveau == 2) {
-              let modal = new bootstrap.Modal(document.getElementById('choiceModal'));
-              modal.show();
+        if (niveau == 3) {
+          window.location.href = "<?= base_url('/profil') ?>";
+        } else if (niveau == 1 || niveau == 2) {
+          // Affiche modal pour choix Profil ou Dashboard
+          let modal = new bootstrap.Modal(document.getElementById('choiceModal'));
+          modal.show();
 
-              document.getElementById('goProfil').onclick = () => {
-                fetch('<?= base_url('/auth/check-info') ?>')
-                  .then(response => response.json())
-                  .then(data => {
-                    if (data.complete) {
-                      window.location.href = "<?= base_url('/profil') ?>";
-                    } else {
-                      window.location.href = "<?= base_url('/completer-info') ?>";
-                    }
-                  })
-                  .catch(() => {
-                    // Raha misy erreur any amin'ny serveur dia alefa any amin'ny completer-info
-                    window.location.href = "<?= base_url('/completer-info') ?>";
-                  });
-              };
+          // PROFIL → direct sans check
+          document.getElementById('goProfil').onclick = () => {
+            window.location.href = "<?= base_url('/profil') ?>";
+          };
 
-              document.getElementById('goDashboard').onclick = () => {
-                window.location.href = "<?= base_url('/dashboard') ?>";
-              };
-            }
-          }
-        })
-        .catch(err => {
-          loginError.textContent = 'Erreur lors de la connexion.';
-          loginError.classList.remove('d-none');
-        });
+          // DASHBOARD → pas de changement
+          document.getElementById('goDashboard').onclick = () => {
+            window.location.href = "<?= base_url('/dashboard') ?>";
+          };
+        }
+      }
+    })
+    .catch(err => {
+      loginError.textContent = 'Erreur lors de la connexion.';
+      loginError.classList.remove('d-none');
     });
+  });
+
   </script>
 </body>
 </html>

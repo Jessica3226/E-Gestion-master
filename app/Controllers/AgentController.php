@@ -44,6 +44,13 @@ class AgentController extends BaseController
         ]);
     }
 
+    public function listesAgent() {
+        $agentModel = new AgentModel();
+        $data['agents'] = $this->agentModel->findAll();
+        $data['search'] = '';
+        return view('listesAgent', $data);
+    }
+
     public function create() 
     {
         return view('ajoutAgent');
@@ -132,7 +139,6 @@ class AgentController extends BaseController
 
         $agentModel->update($id, $newData);
 
-        // Journal des modifications
         $archiveLog->insert([
             'user_matricule' => session()->get('matricule'),
             'agent_matricule' => $oldData['matricule'],

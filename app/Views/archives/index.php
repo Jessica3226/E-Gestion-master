@@ -4,139 +4,9 @@
     <meta charset="UTF-8">
     <title>Historique des actions</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="<?= base_url('style/archive.css') ?>">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-    <style>
-        html, body {
-            background: linear-gradient(135deg, #e0f7fa, #c8e6c9); /* Bleu clair → Vert clair */
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-
-        .container {
-            margin-top: 50px;
-            max-width: 98%;
-        }
-
-        h1 {
-            text-align: center;
-            margin-bottom: 30px;
-            color: #0d6efd;
-            font-weight: 700;
-        }
-
-        .header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 30px;
-        }
-
-        .logo-left, .logo-right {
-            max-height: 60px;
-            object-fit: contain;
-        }
-
-        .form-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .back-button, .btn-danger {
-            border-radius: 12px;
-            font-weight: 600;
-            padding: 10px 18px;
-            transition: all 0.3s ease;
-        }
-
-        .back-button {
-            background-color: #0d6efd;
-            color: white;
-            border: none;
-        }
-
-        .back-button:hover {
-            background-color: #0b5ed7;
-        }
-
-        .btn-danger {
-            background-color: #dc3545;
-            color: white;
-            border: none;
-        }
-
-        .btn-danger:hover {
-            background-color: #bb2d3b;
-        }
-
-        table {
-            border-collapse: separate;
-            border-spacing: 0 15px;
-        }
-
-        table thead th {
-            background-color: #0d6efd;
-            color: white;
-            border-radius: 12px;
-            padding: 12px;
-            text-align: center;
-        }
-
-        table tbody tr {
-            background-color: #ffffff;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            border-radius: 12px;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        table tbody tr:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-        }
-
-        table tbody td {
-            padding: 16px;
-            text-align: center;
-            vertical-align: middle;
-            word-break: break-word;
-        }
-
-        .modif-details {
-            font-size: 0.9em;
-            margin-top: 5px;
-            text-align: left;
-        }
-
-        .avant {
-            color: #dc3545;
-            font-weight: 600;
-        }
-
-        .apres {
-            color: #28a745;
-            font-weight: 600;
-        }
-
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 22px;
-            }
-            .header img {
-                max-height: 50px;
-            }
-            .back-button, .btn-danger {
-                padding: 8px 14px;
-                font-size: 0.9em;
-            }
-        }
-    </style>
 </head>
 <body>
 
@@ -154,7 +24,7 @@
                 <button class="back-button"><i class="fas fa-arrow-left"></i> Retour</button>
             </form>
 
-            <form action="<?= site_url('archives/deleteAllActions') ?>" method="post" onsubmit="return confirm('Voulez-vous vraiment supprimer toutes les actions ?');">
+            <form action="<?= site_url('archives/delete') ?>" method="post" onsubmit="return confirm('Voulez-vous vraiment supprimer toutes les actions ?');">
                 <button class="btn btn-danger"><i class="fas fa-trash-alt"></i> Supprimer tout</button>
             </form>
         </div>

@@ -44,12 +44,12 @@ header("Pragma: no-cache");
     <div class="row text-center text-md-start">
       <!-- Gauche : Contact rapide -->
       <div class=" contact col-12 col-md-4 mb-4 mb-md-0">
-        <h4 class="mb-3 text-success">📞 Contact rapide</h4>
+        <h4 class="mb-3 text-success"> Contact rapide</h4>
         <p><i class="bi bi-telephone-fill me-2 text-success"></i><strong>Téléphone :</strong> <?= esc($agent['contact'] ?? '—') ?></p>
         <p><i class="bi bi-envelope-fill me-2 text-success"></i><strong>Email :</strong> <?= esc($agent['email'] ?? '—') ?></p>
         <p><i class="bi bi-geo-alt-fill me-2 text-success"></i><strong>Adresse :</strong> <?= esc($agent['adresse'] ?? '—') ?> (<?= esc($agent['localisation'] ?? '—') ?>)</p>
 
-        <a href="<?= base_url('/completer-info') ?>" class="btn btn-sm btn-outline-primary mt-2">
+        <a href="/completer-info/edit/<?= $agent['id'] ?>" class="btn btn-sm btn-outline-primary mt-2">
             <i class="bi bi-pencil-fill me-1"></i> Modifier mes infos
         </a>
     </div>
@@ -71,7 +71,7 @@ header("Pragma: no-cache");
       
       <!-- Droite : Détails -->
       <div class="col-12 col-md-4">
-        <h4 class="mb-3 text-success">📋 Détails</h4>
+        <h4 class="mb-3 text-success"> Détails</h4>
         <div class="details-list">
           <p><strong>Matricule :</strong> <?= esc($agent['matricule'] ?? '—') ?></p>
           <p><strong>Date de naissance :</strong> <?= esc($agent['date_naissance'] ?? '—') ?></p>

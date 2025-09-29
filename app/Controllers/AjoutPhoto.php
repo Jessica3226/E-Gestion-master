@@ -1,8 +1,6 @@
 <?php
 
 namespace App\Controllers;
-
-// use App\Models\PhotoModel;
 use App\Models\AgentModel;
 
 
@@ -26,10 +24,6 @@ class AjoutPhoto extends BaseController
             $newFileName = 'agent_id' . $agentId . '_' . $photo->getRandomName();
             $photo->move('uploads/', $newFileName); 
 
-            // $agentModel->save([
-            //     'photo' => $newName
-            // ]);
-            
             $this->agentModel->save([
                 'id' => $agentId, 
                 'photo' => $newFileName

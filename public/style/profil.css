@@ -2,10 +2,10 @@
 /* PROFIL  */
 body {
     background: #f1f3f5;
-    font-family: 'Segoe UI', sans-serif;
+    font-family: Arial, sans-serif;
   }
 
-  /* ===== HEADER ===== */
+  /*  HEADER  */
   .app-header {
     background: linear-gradient(135deg, #198754, #28a745);
     color: #fff;
@@ -60,7 +60,7 @@ body {
     background: #e9ecef;
   }
 
-  /* ===== CARD PROFIL ===== */
+  /* CARD PROFIL */
   .profile-section {
     min-height: calc(100vh - 70px);
     display: flex;
@@ -164,9 +164,9 @@ body {
 }
 
 .info {
-    font-size: 12px;     /* nihena 1pt */
-    line-height: 1.1;    /* akaiky kokoa */
-    margin-right: 70%;   /* tsy be loatra intsony */
+    font-size: 12px;    
+    line-height: 1.1;   
+    margin-right: 70%;  
 }
 
 .info p {
@@ -198,7 +198,7 @@ body {
 }
 
 .liste td {
-    padding: 4px 15px;   /* espace équilibré */
+    padding: 4px 15px; 
     vertical-align: top;
 }
 
@@ -240,7 +240,9 @@ body {
         display: none !important;
     }
 
-    .action-buttons {
+    .action-buttons,
+    .btn,
+    a {
         display: none !important;
     }
 
@@ -269,6 +271,5 @@ body {
     }
 }
 
-  /* PARTIE 3 */
-  /* SITUATION */
+
   

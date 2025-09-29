@@ -1,10 +1,29 @@
 
 body {
-    background: #f4f6f9;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /* background: #f4f6f9; */
+    background: linear-gradient(135deg, white, grey, rgba(16,112,13,0.5));
+    font-family: Arial, sans-serif;
     color: #333;
 }
 
+/* navbar */
+.navbar-custom {
+    background: linear-gradient(90deg,#e9ecef, #f8f9fa);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+.navbar-brand img {
+    height: 60px;
+}
+div .nav-link {
+    font-weight: 500;
+    margin: 0 10px;
+    font-size: 20px;
+}
+.btn-retour {
+    border-radius: 8px;
+}
+
+/* body */
 .top-bar {
     background: linear-gradient(90deg, #1a8c3d, #27ae60);
     color: #fff;
@@ -52,6 +71,18 @@ div .btn-delete:hover {
     background: #c0392b;
     transform: translateY(-2px);
 }
+
+div .btn-contrat {
+    background-color: #28a745; 
+    color: #fff;
+    border: none;
+}
+
+div .btn-contrat:hover {
+    background-color: #218838; 
+    transform: translateY(-2px);
+}
+
 
 div .btn-back {
     border-radius: 25px;

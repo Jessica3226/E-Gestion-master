@@ -8,16 +8,36 @@
     <title>Liste des Agents</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="<?= base_url('style/affichageAgent.css') ?>">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
 </head>
 <body>
 
-<div class="mb-3">
-    <a href="/dashboard" class="btn btn-back">
-        <i class="fas fa-arrow-left"></i> Retour
+<nav class="navbar navbar-expand-lg navbar-custom">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">
+      <img src="images/logo-left.png" alt="Logo">
     </a>
-</div>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item"><a class="nav-link" href="/ajoutAgent">Agents</a></li>
+        <li class="nav-item"><a class="nav-link" href="/familleAgent">Famille</a></li>
+        <li class="nav-item"><a class="nav-link" href="/listesAgent">Listes</a></li>
+        <li class="nav-item"><a class="nav-link" href="/archivesAgent">Archives</a></li>
+      </ul>
+    </div>
+
+    <a href="<?= base_url('dashboard') ?>" class="btn btn-secondary btn-retour">
+      <i class="bi bi-arrow-left-circle me-2"></i> Retour
+    </a>
+  </div>
+</nav>
 
 <div class="container mt-5">
 
@@ -95,6 +115,9 @@
                                 </a>
                                 <a href="/agents/delete/<?= $agent['id'] ?>" class="btn btn-sm btn-action btn-delete" onclick="return confirm('Confirmer la suppression ?')">
                                     <i class="fas fa-trash-alt"></i> Supprimer
+                                </a>
+                                <a href="/contrats" class="btn btn-sm btn-action btn-contrat">
+                                    <i class="fas fa-file-signature"></i> Contrat
                                 </a>
                             </td>
                         </tr>

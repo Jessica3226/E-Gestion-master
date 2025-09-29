@@ -42,6 +42,31 @@
     </script>
 <?php endif; ?>
 
+<nav class="navbar navbar-expand-lg navbar-custom">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">
+      <img src="images/logo-left.png" alt="Logo">
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item"><a class="nav-link" href="/ajoutAgent">Agents</a></li>
+        <li class="nav-item"><a class="nav-link" href="/familleAgent">Famille</a></li>
+        <li class="nav-item"><a class="nav-link" href="/listesAgent">Listes</a></li>
+        <li class="nav-item"><a class="nav-link" href="/archivesAgent">Archives</a></li>
+      </ul>
+    </div>
+
+    <a href="<?= base_url('dashboard') ?>" class="btn btn-secondary btn-retour">
+      <i class="bi bi-arrow-left-circle me-2"></i> Retour
+    </a>
+  </div>
+</nav>
+
 <div class="container my-5">
     <div class="form-header">
         <img src="<?= base_url('images/logo-right.png') ?>" alt="Logo" class="logo">
@@ -210,9 +235,6 @@
             </div>
 
             <div class="text-end d-flex justify-content-between">
-                <a href="<?= base_url('dashboard') ?>" class="btn btn-secondary px-4">
-                    <i class="bi bi-arrow-left-circle me-2"></i> Retour
-                </a>
                 <button type="submit" class="btn btn-success px-4">
                     <i class="bi bi-save me-2"></i> Enregistrer
                 </button>

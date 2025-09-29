@@ -11,7 +11,7 @@ class AgentModel extends Model
     protected $useAutoIncrement = true;
     protected $allowedFields    = [
         'matricule', 'photo', 'nom', 'prenom', 'date_naissance', 'contact', 'cin', 'situation_matrimoniale', 
-        'date_entree', 'corps', 'grade', 'indice', 'qualite', 'localisation', 'direction', 'password', 'email', 'adresse'
+        'date_entree', 'corps', 'grade', 'indice', 'qualite', 'localisation', 'direction', 'password', 'email', 'adresse', 'is_logged_in'
     ];
     protected $useSoftDeletes   = true;
     protected $useTimestamps    = true;

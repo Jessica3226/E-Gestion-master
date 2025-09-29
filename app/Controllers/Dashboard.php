@@ -2,7 +2,9 @@
 
 namespace App\Controllers;
 use App\Models\AgentModel;
+use App\Models\SituationAdminModel;
 use App\Models\FamilleModel;
+use App\Models\ArchiveModel;
 
 class Dashboard extends BaseController
 {
@@ -14,6 +16,57 @@ class Dashboard extends BaseController
         $this->agentModel = new AgentModel();
         $this->session = session(); 
     }
+
+    public function index()
+    {
+        $session = session(); 
+        
+        $situationModel = new SituationAdminModel();
+        $familleModel = new FamilleModel();
+        $archiveLog = new ArchiveModel();
+
+
+        $agentConnecte = null;
+        $agentsActifs = 0;
+        if ($session->get('is_logged_in')) {
+            $agent_id = $session->get('agent_id');
+            $agentConnecte = $this->agentModel->find($agent_id);
+
+            $agentsActifs = $this->agentModel->where('is_logged_in', 1)->countAllResults();
+        }
+        $agentsActifs = $this->agentModel->where('is_logged_in', 1)->countAllResults();
+
+        // Statistiques principales
+        $contratsEnCours = $situationModel->where('date_fin >=', date('Y-m-d'))->countAllResults();
+        $contratsExpires = $situationModel->where('date_fin <', date('Y-m-d'))->countAllResults();
+        $famillesLiees = $familleModel->countAllResults();
+        $archivesRecentes = $archiveLog->orderBy('created_at', 'DESC')->findAll();
+
+        $derniersAgents = $this->agentModel->orderBy('created_at', 'DESC')->limit(3)->findAll();
+
+        // Contrats proches de l'expiration
+        $contratsAlertes = $situationModel
+                            ->where('date_fin <=', date('Y-m-d', strtotime('+30 days')))
+                            ->where('date_fin >=', date('Y-m-d'))
+                            ->findAll();
+
+        $famillesIncompletes = [];  
+        $historiqueSituations = $archiveLog->orderBy('created_at', 'DESC')->limit(10)->findAll();
+
+        return view('dashboard', [
+            'agentConnecte' => $agentConnecte,
+            'agentsActifs' => $agentsActifs,
+            'contratsEnCours' => $contratsEnCours,
+            'contratsExpires' => $contratsExpires,
+            'famillesLiees' => $famillesLiees,
+            'archivesRecentes' => count($archivesRecentes),
+            'derniersAgents' => $derniersAgents,
+            'contratsAlertes' => $contratsAlertes,
+            'famillesIncompletes' => $famillesIncompletes,
+            'historiqueSituations' => $historiqueSituations
+        ]);
+    }
+
 
     public function admin()
     {
@@ -43,56 +96,4 @@ class Dashboard extends BaseController
 
         return view('dashboard');
     }
-
-    public function situation()
-    {
-        if (!$this->session->get('is_logged_in')) {  
-            return redirect()->to('/login')->with('error', 'Session expirée. Veuillez vous reconnecter.');
-        }
-
-        $agent_id = $this->session->get('agent_id');
-        $data['agent'] = $this->agentModel->find($agent_id);
-
-        return view('situation', $data);
-    }
-
-    public function certificat()
-    {
-        if (!$this->session->get('is_logged_in')) {  
-            return redirect()->to('/login')->with('error', 'Session expirée. Veuillez vous reconnecter.');
-        }
-
-        $agent_id = $this->session->get('agent_id');
-        $data['agent'] = $this->agentModel->find($agent_id);
-
-        return view('certificat', $data);
-    }
-
-    public function imprimer($id_agent)
-    {
-        $agentModel = new AgentModel();
-        $certificatModel = new \App\Models\CertificatModel();
-        $archiveModel = new ArchiveAgentModel();
-
-        $certificatModel->insert([
-            'id_agent' => $id_agent,
-            'annee'    => date('Y'),
-            'created_at' => date('Y-m-d')
-        ]);
-        $insert_id = $certificatModel->getInsertID();
-
-        $numero_auto = str_pad($insert_id, 4, "0", STR_PAD_LEFT);
-        $numero_formatte = $numero_auto . '-' . date('Y') . '/MIN-JS';
-        $certificatModel->update($insert_id, ['numero_formatte' => $numero_formatte]);
-
-        $agent = $agentModel->find($id_agent);
-        $historiques = $archiveModel->where('id_agent', $id_agent)->orderBy('date_debut', 'ASC')->findAll();
-
-        return view('profil', [
-            'agent' => [],
-            'historiques' => [],
-            'numero_formatte' => null
-        ]);
-    }
-
 }

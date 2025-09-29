@@ -76,6 +76,8 @@ class Auth extends Controller
             'is_logged_in' => true
         ]);
 
+        $this->agentModel->update($agent['id'], ['is_logged_in' => 1]);
+
         return $this->response->setJSON([
             'success' => true,
             'niveau' => $agent['niveau']
@@ -83,26 +85,16 @@ class Auth extends Controller
 
     }
     
-    public function checkInfo()
+   
+    public function completerInfo($agentId = null)
     {
-        $agentId = session()->get('agent_id');
-    
         if (!$agentId) {
-            return $this->response->setJSON(['complete' => false]);
+            $agentId = session()->get('agent_id');
         }
     
         $agent = $this->agentModel->find($agentId);
     
-        if (!$agent || empty($agent['email']) || empty($agent['adresse'])) {
-            return $this->response->setJSON(['complete' => false]);
-        }
-    
-        return $this->response->setJSON(['complete' => true]);
-    }
-
-    public function completerInfo()
-    {
-        return view('auth/completer_info');
+        return view('auth/completer_info', ['agent' => $agent]);
     }
     
     public function saveInfo()
@@ -140,6 +132,10 @@ class Auth extends Controller
 
     public function logout()
     {       
+        $agent_id = session()->get('agent_id');
+        if($agent_id){
+            $this->agentModel->update($agent_id, ['is_logged_in' => 0]);
+        }
         session()->destroy();
         return redirect()->to('/login');
     }

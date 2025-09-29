@@ -4,11 +4,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Situation Administrative</title>
-
-    <!-- CSS -->
     <link rel="stylesheet" href="<?= base_url('style/profil.css') ?>">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        @media print 
+        { 
+            @page { 
+                size: landscape; 
+            } 
+            body { 
+                background-color: white; 
+                color: black; 
+                padding: 0; 
+            } 
+            h3 { 
+                color: black; 
+                text-align: center; 
+                margin-bottom: 20px; 
+            } 
+            .action-buttons, .btn, a { 
+                display: none !important; 
+            } 
+            table { 
+                width: 100%; 
+                border-collapse: collapse; 
+            } 
+            table th, table td { 
+                border: 1px solid black; 
+                padding: 6px; 
+                font-size: 0.9rem; 
+            }
+            
+  th, td {
+      padding: 6px;
+      font-size: 0.9rem;
+  }
+            thead { 
+                background-color: #ddd !important; 
+                -webkit-print-color-adjust: exact; 
+            } 
+        }
+    </style>
 </head>
 <body>
     <h3 class="text-center text-success">SITUATION ADMINISTRATIVE</h3>

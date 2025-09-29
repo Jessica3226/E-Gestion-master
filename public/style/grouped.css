@@ -1,6 +1,6 @@
 body {
     background: linear-gradient(135deg, #f9fafb, #e9ecef);
-    font-family: 'Segoe UI', sans-serif;
+    font-family: Arial, sans-serif;
 }
 
 div h1 {
@@ -74,4 +74,19 @@ div .btn-back {
 div .btn-back:hover {
     background: #626e70;
     transform: translateY(-2px);
+}
+.navbar-custom {
+    background: linear-gradient(90deg,#e9ecef, #f8f9fa);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+.navbar-brand img {
+    height: 60px;
+}
+div .nav-link {
+    font-weight: 500;
+    margin: 0 10px;
+    font-size: 20px;
+}
+.btn-retour {
+    border-radius: 8px;
 }
