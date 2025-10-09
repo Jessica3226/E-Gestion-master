@@ -10,57 +10,36 @@
 </head>
 <body>
 
-<?php if (session()->getFlashdata('success')): ?>
-    <div id="notif" class="alert alert-success alert-dismissible fade show position-fixed top-0 end-0 m-3 shadow" role="alert">
-        <?= session()->getFlashdata('success') ?>
-        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-    </div>
-    <script>
-        setTimeout(() => {
-            let notif = document.getElementById('notif');
-            if (notif) {
-                notif.classList.remove('show');
-                notif.classList.add('fade');
-            }
-        }, 3000); 
-    </script>
-<?php endif; ?>
-
-<?php if (session()->getFlashdata('error')): ?>
-    <div id="notif" class="alert alert-danger alert-dismissible fade show position-fixed top-0 end-0 m-3 shadow" role="alert">
-        <?= session()->getFlashdata('error') ?>
-        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-    </div>
-    <script>
-        setTimeout(() => {
-            let notif = document.getElementById('notif');
-            if (notif) {
-                notif.classList.remove('show');
-                notif.classList.add('fade');
-            }
-        }, 3000);
-    </script>
-<?php endif; ?>
-
 <nav class="navbar navbar-expand-lg navbar-custom">
   <div class="container-fluid">
     <a class="navbar-brand" href="#">
       <img src="images/logo-left.png" alt="Logo">
     </a>
 
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
     <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
       <ul class="navbar-nav">
-        <li class="nav-item"><a class="nav-link" href="/ajoutAgent">Agents</a></li>
-        <li class="nav-item"><a class="nav-link" href="/familleAgent">Famille</a></li>
-        <li class="nav-item"><a class="nav-link" href="/listesAgent">Listes</a></li>
-        <li class="nav-item"><a class="nav-link" href="/archivesAgent">Archives</a></li>
+        <li class="nav-item">
+            <a class="nav-link <?= service('uri')->getSegment(1) == 'ajoutAgent' ? 'active' : '' ?>" href="/ajoutAgent">
+                Agents
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link <?= service('uri')->getSegment(1) == 'familleAgent' ? 'active' : '' ?>" href="/familleAgent">
+                Famille
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link <?= service('uri')->getSegment(1) == 'listesAgent' ? 'active' : '' ?>" href="/listesAgent">
+                Listes
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link <?= service('uri')->getSegment(1) == 'archivesAgent' ? 'active' : '' ?>" href="/archivesAgent">
+                Archives
+            </a>
+        </li>
       </ul>
     </div>
-
     <a href="<?= base_url('dashboard') ?>" class="btn btn-secondary btn-retour">
       <i class="bi bi-arrow-left-circle me-2"></i> Retour
     </a>
@@ -71,32 +50,10 @@
     <div class="form-header">
         <img src="<?= base_url('images/logo-right.png') ?>" alt="Logo" class="logo">
         <h2>RESSOURCES HUMAINES</h2>
-        <h4>AJOUT D'UN AGENT</h4>
+        <h4><?= isset($agent) ? "Modifier un agent" : "Ajouter un agent" ?></h4>
     </div>
 
     <div class="form-container">
-        <?php if(session()->getFlashdata('errors')): ?>
-            <div class="alert alert-danger">
-                <ul>
-                    <?php foreach(session()->getFlashdata('errors') as $error): ?>
-                        <li><?= esc($error) ?></li>
-                    <?php endforeach; ?>
-                </ul>
-            </div>
-        <?php endif; ?>
-
-        <?php if(session()->getFlashdata('error')): ?>
-            <div class="alert alert-danger">
-                <?= esc(session()->getFlashdata('error')) ?>
-            </div>
-        <?php endif; ?>
-
-        <?php if(session()->getFlashdata('success')): ?>
-            <div class="alert alert-success">
-                <?= esc(session()->getFlashdata('success')) ?>
-            </div>
-        <?php endif; ?>
-
         <form action="<?= isset($agent) ? base_url('agents/update/' . $agent['id']) : base_url('agent/addAgent') ?>" method="post">
            
             <div class="form-section">

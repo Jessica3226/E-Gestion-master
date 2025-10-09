@@ -2,7 +2,7 @@
 namespace Config;
 
 use CodeIgniter\Config\Filters as BaseFilters;
-use CodeIgniter\Filters\Cors; // Assurez-vous d'importer le filtre Cors
+use CodeIgniter\Filters\Cors; 
 use CodeIgniter\Filters\CSRF;
 use CodeIgniter\Filters\DebugToolbar;
 use CodeIgniter\Filters\ForceHTTPS;
@@ -21,7 +21,7 @@ class Filters extends BaseFilters
         'honeypot'      => Honeypot::class,
         'invalidchars'  => InvalidChars::class,
         'secureheaders' => SecureHeaders::class,
-        'cors'          => Cors::class,  // Assurez-vous que Cors est bien ajouté ici
+        'cors'          => Cors::class,  
         'forcehttps'    => ForceHTTPS::class,
         'pagecache'     => PageCache::class,
         'performance'   => PerformanceMetrics::class,
@@ -36,7 +36,7 @@ class Filters extends BaseFilters
             
         ],
         'before' => [
-            'cors',  // Activer le filtre CORS globalement
+            'cors', 
         ],
         'after' => [
             // Vous pouvez ajouter d'autres filtres après la requête si nécessaire
@@ -46,5 +46,4 @@ class Filters extends BaseFilters
     public array $methods = [];
 
     public array $filters = [];
-
 }

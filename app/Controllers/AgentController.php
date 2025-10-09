@@ -166,7 +166,7 @@ class AgentController extends BaseController
             ]);
 
             $this->agentModel->delete($id, true);
-            return redirect()->to('/agents')->with('success', 'Agent supprimé avec succès');
+            return redirect()->to('/listesAgent')->with('success', 'Agent supprimé avec succès');
         }
 
         return redirect()->to('/agents')->with('error', 'Agent introuvable');

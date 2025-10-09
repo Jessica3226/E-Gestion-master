@@ -6,6 +6,7 @@
   body {
     background: linear-gradient(135deg, white, grey, rgba(16,112,13,0.5));
     min-height: 100vh;
+    font-family: Verdana;
   }
   .form-header {
       background: linear-gradient(135deg, #508d44, #3abe4c);
@@ -42,18 +43,35 @@
       display: block;
       margin: 0 auto 10px auto;
   }
-  .navbar-custom {
-    background: linear-gradient(90deg,#e9ecef, #f8f9fa);
-    box-shadow: 0 2px 4px rgba(0,0,0,0.5);
-}
+
 .navbar-brand img {
     height: 60px;
 }
-div .nav-link {
+.navbar-custom {
+    background: rgb(192, 188, 188);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+  }
+  
+  .navbar-custom .nav-link {
+    color: rgba(255,255,255,0.85);
     font-weight: 500;
-    margin: 0 10px;
+    padding: 10px 20px;
     font-size: 20px;
-}
+    border-radius: 6px;
+    transition: all 0.3s ease;
+  }
+  
+  .navbar-custom .nav-link:hover {
+    color: #fff;
+    /* background-color: rgba(255,255,255,0.15); */
+  }
+  
+  .navbar-custom .nav-link.active {
+    color: #10700d;
+    /* background-color: #ffeb3b; signe misongadina (mavo) */
+    font-weight: 700;
+  }  
+
 .btn-retour {
     border-radius: 8px;
 }

@@ -16,7 +16,10 @@ class Auth extends Controller
 
     public function login()
     {
-
+        if (session()->get('is_logged_in')) {
+            return redirect()->to('/dashboard');
+        }
+    
         return view('auth/login');
     }
 
@@ -115,28 +118,20 @@ class Auth extends Controller
         return redirect()->to('/profil');
     }
 
-    public function profil()
-{
-    $session = session();
-
-    if (!$session->get('isLoggedIn')) {
-        return redirect()->to('/login')->with('error', 'Veuillez vous reconnecter.');
-    }
-
-    $agent_id = $session->get('agent_id');
-    $agent = $this->agentModel->find($agent_id);
-
-    return view('profil', ['agent' => $agent]);
-}
-
-
     public function logout()
-    {       
+    {
         $agent_id = session()->get('agent_id');
-        if($agent_id){
+        if ($agent_id) {
             $this->agentModel->update($agent_id, ['is_logged_in' => 0]);
         }
+    
         session()->destroy();
-        return redirect()->to('/login');
+    
+        header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+        header("Pragma: no-cache");
+    
+        return redirect()->to('/login')->with('message', 'Vous êtes déconnecté.');
     }
+    
+
 }

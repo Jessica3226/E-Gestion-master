@@ -13,7 +13,7 @@
     <nav class="NavBar">
         <div class="header-content">
             <img src="<?= base_url('images/logo-left.png') ?>" alt="Logo gauche" class="logo">
-            <h1>Ressources Humaines</h1>
+            <!-- <h1>Ressources Humaines</h1> -->
             <img src="<?= base_url('images/logo-right.png') ?>" alt="Logo droit" class="logo">
         </div>
     </nav>
@@ -21,7 +21,7 @@
 
 <section class="hero text-white">
     <div class="container">
-        <h2>Bienvenue dans votre espace Ressources Humaines</h2>
+        <h2>Bienvenue sur votre portail Ressources Humaines</h2>
     </div>
 </section>
 
@@ -33,7 +33,7 @@
                     <div class="mb-3"><i class="bi bi-clipboard-data" style="font-size:40px;"></i></div>
                     <h5>Recensement</h5>
                     <p>Enregistrez et gérez vos informations.</p>
-                    <a href="<?= site_url('login') ?>" class="btn">Accéder</a>
+                    <a href="<?= site_url('login') ?>" class="btn">Accéder > </a>
                 </div>
             </div>
             <div class="col-md-3">
@@ -41,7 +41,7 @@
                     <div class="mb-3"><i class="bi bi-graph-up" style="font-size:40px;"></i></div>
                     <h5>Avancement</h5>
                     <p>Suivez l’évolution de votre carrière.</p>
-                    <a href="<?= site_url('#') ?>" class="btn">Voir plus</a>
+                    <a href="<?= site_url('#') ?>" class="btn">Voir plus > </a>
                 </div>
             </div>
             <div class="col-md-3">
@@ -49,7 +49,7 @@
                     <div class="mb-3"><i class="bi bi-calendar-check" style="font-size:40px;"></i></div>
                     <h5>Congé / Permission</h5>
                     <p>Demandez et suivez vos absences.</p>
-                    <a href="<?= site_url('#') ?>" class="btn">Demander</a>
+                    <a href="<?= site_url('#') ?>" class="btn">Demander > </a>
                 </div>
             </div>
             <div class="col-md-3">
@@ -57,7 +57,7 @@
                     <div class="mb-3"><i class="bi bi-info-circle" style="font-size:40px;"></i></div>
                     <h5>Informations</h5>
                     <p>Accédez aux infos importantes.</p>
-                    <a href="<?= site_url('#') ?>" class="btn">Consulter</a>
+                    <a href="<?= site_url('#') ?>" class="btn">Consulter > </a>
                 </div>
             </div>
         </div>

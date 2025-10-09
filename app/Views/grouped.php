@@ -33,7 +33,7 @@ $grouped = $grouped ?? [];
         </ul>
         </div>
 
-        <a href="<?= base_url('listesAgent') ?>" class="btn btn-secondary btn-retour">
+        <a href="<?= base_url('dashboard') ?>" class="btn btn-secondary btn-retour">
         <i class="bi bi-arrow-left-circle me-2"></i> Retour
         </a>
     </div>

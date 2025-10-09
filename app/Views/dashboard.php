@@ -1,3 +1,8 @@
+<?php
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -16,8 +21,10 @@
     <h2 class="mb-0"><img src="images/logo-left.png" alt="Logo Gauche" class="logo-left"> Tableau de bord RH</h2>
     <div class="d-flex align-items-center gap-2">
       <input type="text" id="searchGlobal" class="form-control form-control-sm" placeholder="Rechercher...">
-      <button class="btn btn-light btn-sm" id="btnExport"><i class="fas fa-file-export"></i> Export</button>
-      <button class="logout-btn" onclick="logoutUser()"><i class="fas fa-sign-out-alt"></i> Déconnexion</button>
+      <!-- <button class="btn btn-light btn-sm" id="btnExport"><i class="fas fa-file-export"></i> Export</button> -->
+      <a href="<?= site_url('logout') ?>" class="btn btn-sm btn-outline-danger" onclick="return confirm('Voulez-vous vraiment vous déconnecter ?');">
+        <i class="fas fa-sign-out-alt"></i> Déconnexion
+      </a>
     </div>
   </div>
 
@@ -94,21 +101,21 @@
     });
   });
 
-  document.getElementById('btnExport').addEventListener('click', function() {
-    const data = {
-      agentsActifs: <?= $agentsActifs ?>,
-      contratsEnCours: <?= $contratsEnCours ?>,
-      contratsExpires: <?= $contratsExpires ?>,
-      famillesLiees: <?= $famillesLiees ?>
-    };
-    const blob = new Blob([JSON.stringify(data, null, 2)], {type: "application/json"});
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "dashboard_export.json"; 
-    a.click();
-    URL.revokeObjectURL(url);
-  });
+  // document.getElementById('btnExport').addEventListener('click', function() {
+  //   const data = {
+  //     agentsActifs: <?= $agentsActifs ?>,
+  //     contratsEnCours: <?= $contratsEnCours ?>,
+  //     contratsExpires: <?= $contratsExpires ?>,
+  //     famillesLiees: <?= $famillesLiees ?>
+  //   };
+  //   const blob = new Blob([JSON.stringify(data, null, 2)], {type: "application/json"});
+  //   const url = URL.createObjectURL(blob);
+  //   const a = document.createElement("a");
+  //   a.href = url;
+  //   a.download = "dashboard_export.json"; 
+  //   a.click();
+  //   URL.revokeObjectURL(url);
+  // });
 </script>
 </body>
 </html>

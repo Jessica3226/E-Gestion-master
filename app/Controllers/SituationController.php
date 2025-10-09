@@ -38,7 +38,7 @@ class SituationController extends Controller
 
         $situationModel->insert($data);
 
-        return redirect()->to('/contrats')->with('success', 'Situation administrative ajoutée avec succès');
+        return redirect()->to('/listesAgent')->with('success', 'Situation administrative ajoutée avec succès');
     }
 
 

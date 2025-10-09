@@ -51,7 +51,10 @@ class FamilleController extends BaseController {
                 ->first();
 
             if ($existeConjoint) {
-                return redirect()->back()->withInput()->with('error', "L'agent avec matricule $matricule a déjà un conjoint/conjointe !");
+                return redirect()
+                ->back()
+                ->withInput()
+                ->with('error', "L'agent avec matricule $matricule a déjà un conjoint/conjointe !");
             }
         }
 

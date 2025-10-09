@@ -1,57 +1,107 @@
+/* Background global */
 body { 
-    background-color: #f8f9fa; 
-}
-.dashboard-header { 
-    background-color: #10700d; 
-    color: white; 
-    padding: 1rem; 
-    border-radius: 0.5rem; 
-}
-.logo-left {
-    height: 50px;
-}
-.logout-btn {
-    background: rgb(190, 30, 30);
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: 0.3s;
+    background: linear-gradient(135deg, #e8f5e9, #f1f8e9);
+    font-family: Verdana;
+    color: #333;
 }
 
-.logout-btn:hover {
-    background: rgb(134, 10, 10);
+/* Header tableau de bord */
+.dashboard-header { 
+    background: linear-gradient(90deg, #0a5c0a, #10700d);
+    color: white; 
+    padding: 1.2rem; 
+    border-radius: 0.75rem; 
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
 }
+.dashboard-header h2 {
+    font-weight: 600;
+    font-size: 1.6rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.logo-left {
+    height: 45px;
+}
+
+/* Boutons */
+.btn {
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+/* .btn-light:hover {
+    background-color: #e6f4ea;
+} */
+.btn-outline-danger {
+    width: 70%;
+    border-width: 2px;
+}
+.btn-outline-danger:hover {
+    background-color: #c62828;
+    color: #fff;
+}
+
+/* Cartes stats */
 .stats-card { 
     border-radius: 1rem; 
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1); 
-    transition: 0.3s; 
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1); 
+    transition: all 0.3s ease;
+    background: #fff;
+}
+.stats-card h5 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
 }
 .stats-card:hover { 
-    transform: translateY(-3px); 
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.15); 
 }
+
+/* Sidebar */
 .sidebar { 
-    background: white; 
-    border-radius: 0.75rem; 
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1); 
-    padding: 1rem; 
+    background: #ffffff; 
+    border-radius: 1rem; 
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1); 
+    padding: 1.2rem; 
 }
 .sidebar .module { 
-    padding: 0.75rem; 
-    border-bottom: 1px solid #dee2e6; 
+    padding: 0.9rem; 
+    border-bottom: 1px solid #e0e0e0; 
     cursor: pointer; 
-    transition: 0.3s; 
+    transition: all 0.3s ease; 
+    border-radius: 0.6rem;
+    font-weight: 500;
+}
+.sidebar .module i {
+    color: #10700d;
+    margin-right: 8px;
+}
+.sidebar .module:hover { 
+    background: #e8f5e9; 
+    transform: translateX(4px);
 }
 .sidebar .module:last-child { 
     border-bottom: none; 
 }
-.sidebar .module:hover { 
-    background-color: #f1f3f5; 
-    border-radius: 0.5rem; 
-}
-.module a{
+.module a {
     text-decoration: none;
-    color: black;
-    margin-left: 10px;
+    color: inherit;
+}
+
+/* Zone dynamique */
+.card-header {
+    font-weight: 600;
+    font-size: 1.1rem;
+    border-radius: 0.75rem 0.75rem 0 0;
+}
+
+/* Animation fade-in */
+.stats-card, .sidebar, .dashboard-header {
+    animation: fadeIn 0.7s ease-in-out;
+}
+@keyframes fadeIn {
+    from {opacity: 0; transform: translateY(15px);}
+    to {opacity: 1; transform: translateY(0);}
 }

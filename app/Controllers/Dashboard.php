@@ -20,6 +20,10 @@ class Dashboard extends BaseController
     public function index()
     {
         $session = session(); 
+
+        if (!$session->get('is_logged_in') || !$session->get('agent_id')) {
+            return redirect()->to('/login')->with('error', 'Session expirée. Veuillez vous reconnecter.');
+        }
         
         $situationModel = new SituationAdminModel();
         $familleModel = new FamilleModel();

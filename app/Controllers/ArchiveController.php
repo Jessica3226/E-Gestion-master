@@ -21,18 +21,17 @@ class ArchiveController extends Controller
 
     public function delete($id)
     {
-        $archiveModel = new ArchiveAgentModel();
-        if ($archiveModel->delete($id)) {
+        if ($this->archiveModel->delete($id)) {
             return redirect()->to('/archives')->with('success', 'Archive supprimée avec succès.');
         } else {
             return redirect()->to('/archives')->with('error', 'Erreur lors de la suppression de l\'archive.');
         }
     }
-
-    public function deleteAll(){
-        $archiveModel = new ArchiveAgentModel();
-        $archiveModel->truncate();
-
-        return redirect()->to('/archives')->with('success', 'Archives supprimée avec succès.');
+    
+    public function deleteAll()
+    {
+        $this->archiveModel->truncate();
+        return redirect()->to('/archives')->with('success', 'Archives supprimées avec succès.');
     }
+    
 }

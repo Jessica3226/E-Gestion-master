@@ -20,19 +20,31 @@
       <img src="images/logo-left.png" alt="Logo">
     </a>
 
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
     <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
       <ul class="navbar-nav">
-        <li class="nav-item"><a class="nav-link" href="/ajoutAgent">Agents</a></li>
-        <li class="nav-item"><a class="nav-link" href="/familleAgent">Famille</a></li>
-        <li class="nav-item"><a class="nav-link" href="/listesAgent">Listes</a></li>
-        <li class="nav-item"><a class="nav-link" href="/archivesAgent">Archives</a></li>
+        <li class="nav-item">
+            <a class="nav-link <?= service('uri')->getSegment(1) == 'ajoutAgent' ? 'active' : '' ?>" href="/ajoutAgent">
+                Agents
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link <?= service('uri')->getSegment(1) == 'familleAgent' ? 'active' : '' ?>" href="/familleAgent">
+                Famille
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link <?= service('uri')->getSegment(1) == 'listesAgent' ? 'active' : '' ?>" href="/listesAgent">
+                Listes
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link <?= service('uri')->getSegment(1) == 'archivesAgent' ? 'active' : '' ?>" href="/archivesAgent">
+                Archives
+            </a>
+        </li>
+
       </ul>
     </div>
-
     <a href="<?= base_url('dashboard') ?>" class="btn btn-secondary btn-retour">
       <i class="bi bi-arrow-left-circle me-2"></i> Retour
     </a>
@@ -141,7 +153,7 @@
 
 <script>
     let rows = Array.from(document.querySelectorAll('#tableBody tr'));
-    const rowsPerPage = 6;
+    const rowsPerPage = 5;
     let currentPage = 1;
     let filteredRows = [...rows];
 

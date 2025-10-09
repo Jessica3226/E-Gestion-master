@@ -8,43 +8,49 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <style>
-        @media print 
-        { 
+        @media print {
             @page { 
                 size: landscape; 
-            } 
+                margin: 1cm; 
+            }
+
             body { 
                 background-color: white; 
                 color: black; 
                 padding: 0; 
             } 
+
             h3 { 
                 color: black; 
                 text-align: center; 
                 margin-bottom: 20px; 
             } 
+
             .action-buttons, .btn, a { 
                 display: none !important; 
             } 
+
             table { 
                 width: 100%; 
-                border-collapse: collapse; 
+                border-collapse: collapse; /* mitambatra tsara ny tsipika */
+                border: 10.5px solid black; /* tsipika manodidina ny tableau */
             } 
+
             table th, table td { 
-                border: 1px solid black; 
-                padding: 6px; 
-                font-size: 0.9rem; 
+                border: 1px solid black; /* tsipika mazava tsara toy ny Word/Excel */
+                padding: 8px; 
+                font-size: 0.95rem; 
+                text-align: center;
+                background-color: white !important; /* mba tsy hisy volondavenona */
             }
-            
-  th, td {
-      padding: 6px;
-      font-size: 0.9rem;
-  }
-            thead { 
-                background-color: #ddd !important; 
+
+            thead th { 
+                background-color: #f2f2f2 !important; /* lohateny volontsôkôlà malefaka */
                 -webkit-print-color-adjust: exact; 
-            } 
+                font-weight: bold;
+            }
         }
+
     </style>
 </head>
 <body>

@@ -1,7 +1,7 @@
 body {
     background: #f5f5f5; 
     color: #222;  
-    font-family: Arial, sans-serif;
+    font-family: Verdana;
 }
 .header {
     background: #10700d; 
@@ -52,19 +52,19 @@ body {
     box-shadow: 0px 6px 18px rgba(0,0,0,0.2);
 }
 .card-custom .btn {
-    border-radius: 25px;
-    font-weight: bold;
-    background: #10700d;
-    color: #fff;
-    border: none;
+    width: 55%;
+    height: auto;
+    margin-left: 23%;
+    font-size: 12px;
+    border: 1px solid #10700d;
 }
 .card-custom .btn:hover {
-    background: #0a500a; 
+    background: #10700d; 
 }
 .footer {
     background: #e0e0e0;
     color: #222;
     text-align: center;
     padding: 15px;
-    margin-top: 50px;
+    margin-top: -10px;
 }
