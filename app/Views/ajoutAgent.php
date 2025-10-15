@@ -51,6 +51,21 @@
         <img src="<?= base_url('images/logo-right.png') ?>" alt="Logo" class="logo">
         <h2>RESSOURCES HUMAINES</h2>
         <h4><?= isset($agent) ? "Modifier un agent" : "Ajouter un agent" ?></h4>
+        
+        <?php if (isset($success)): ?>
+            <div id="successAlert" class="alert alert-success text-center" role="alert">
+                <?= $success ?>
+            </div>
+
+            <script>
+                setTimeout(() => {
+                    const alertBox = document.getElementById('successAlert');
+                    if (alertBox) alertBox.remove();
+                    location.reload();
+                }, 3000);
+            </script>
+        <?php endif; ?>
+
     </div>
 
     <div class="form-container">
@@ -115,13 +130,13 @@
                         <select class="form-select" id="corps" name="corps" required>
                             <option value="">Sélectionnez</option>
                             <option value="sous-operateur" <?= isset($agent) && $agent['corps'] == 'sous-operateur' ? 'selected' : '' ?>>Sous-Opérateur</option>
-                            <option value="operateur" <?= isset($agent) && $agent['corps'] == 'operateur' ? 'selected' : '' ?>>Opérateur</option>
-                            <option value="encadreur" <?= isset($agent) && $agent['corps'] == 'encadreur' ? 'selected' : '' ?>>Encadreur</option>
+                            <option value="Opérateur" <?= isset($agent) && $agent['corps'] == 'Opérateur' ? 'selected' : '' ?>>Opérateur</option>
+                            <option value="Encadreur" <?= isset($agent) && $agent['corps'] == 'Encadreur' ? 'selected' : '' ?>>Encadreur</option>
                             <option value="Technicien_Superieur" <?= isset($agent) && $agent['corps'] == 'Technicien_Superieur' ? 'selected' : '' ?>>Technicien Supérieur</option>
-                            <option value="realisateur" <?= isset($agent) && $agent['corps'] == 'realisateur' ? 'selected' : '' ?>>Réalisateur</option>
-                            <option value="planificateur" <?= isset($agent) && $agent['corps'] == 'planificateur' ? 'selected' : '' ?>>Planificateur</option>
-                            <option value="cpci" <?= isset($agent) && $agent['corps'] == 'cpci' ? 'selected' : '' ?>>CPCI</option>
-                        </select>
+                            <option value="Réalisateur" <?= isset($agent) && $agent['corps'] == 'Réalisateur' ? 'selected' : '' ?>>Réalisateur</option>
+                            <option value="Planificateur" <?= isset($agent) && $agent['corps'] == 'Planificateur' ? 'selected' : '' ?>>Planificateur</option>
+                            <option value="CPCI" <?= isset($agent) && $agent['corps'] == 'CPCI' ? 'selected' : '' ?>>CPCI</option>
+                        </select>CPCI
                     </div>
                 </div>
 
@@ -136,6 +151,8 @@
                             <option value="2C1E" <?= isset($agent) && $agent['grade'] == '2C1E' ? 'selected' : '' ?>>2C1E</option>
                             <option value="2C2E" <?= isset($agent) && $agent['grade'] == '2C2E' ? 'selected' : '' ?>>2C2E</option>
                             <option value="2C3E" <?= isset($agent) && $agent['grade'] == '2C3E' ? 'selected' : '' ?>>2C3E</option>
+                            <option value="2C3E" <?= isset($agent) && $agent['grade'] == '2C3E' ? 'selected' : '' ?>>3C1E</option>
+                            <option value="2C3E" <?= isset($agent) && $agent['grade'] == '2C3E' ? 'selected' : '' ?>>3C2E</option>
                         </select>
                     </div>
                     <div class="col-md-6">
@@ -144,25 +161,56 @@
                     </div>
                 </div>
 
-                <div class="mb-3">
-                    <label for="direction" class="form-label">Direction</label>
-                    <select id="direction" name="direction" class="form-select" required>
-                        <option value="">Sélectionnez</option>
-                        <option value="DGS" <?= isset($agent) && $agent['direction'] == 'DGS' ? 'selected' : '' ?>>DGS</option>
-                        <option value="DGANS" <?= isset($agent) && $agent['direction'] == 'DGANS' ? 'selected' : '' ?>>DG ANS</option>
-                        <option value="DGTAF" <?= isset($agent) && $agent['direction'] == 'DGTAF' ? 'selected' : '' ?>>DG TAFITA</option>
-                        <option value="INJ" <?= isset($agent) && $agent['direction'] == 'INJ' ? 'selected' : '' ?>>INJ</option>
-                        <option value="CRJS" <?= isset($agent) && $agent['direction'] == 'CRJS' ? 'selected' : '' ?>>CRJS</option>
-                        <option value="DAF" <?= isset($agent) && $agent['direction'] == 'DAF' ? 'selected' : '' ?>>DAF</option>
-                        <option value="DRH" <?= isset($agent) && $agent['direction'] == 'DRH' ? 'selected' : '' ?>>DRH</option>
-                        <option value="DIL" <?= isset($agent) && $agent['direction'] == 'DIL' ? 'selected' : '' ?>>DIL</option>
-                        <option value="DCAI" <?= isset($agent) && $agent['direction'] == 'DCAI' ? 'selected' : '' ?>>DCAI</option>
-                        <option value="SPCIJ" <?= isset($agent) && $agent['direction'] == 'SPCIJ' ? 'selected' : '' ?>>SPCIJ</option>
-                        <option value="EPQE" <?= isset($agent) && $agent['direction'] == 'EPQE' ? 'selected' : '' ?>>CN-EPQE</option>
-                        <option value="DSI" <?= isset($agent) && $agent['direction'] == 'DRH' ? 'selected' : '' ?>>DSI</option>
-                    </select>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="fonction" class="form-label">Fonction</label>
+                        <select class="form-select" id="fonction" name="fonction" required>
+                            <option value="">Sélectionnez</option>
+                            <option value="sous-operateur" <?= isset($agent) && $agent['fonction'] == 'sous-operateur' ? 'selected' : '' ?>>Sous-Opérateur</option>
+                            <option value="Opérateur" <?= isset($agent) && $agent['fonction'] == 'Opérateur' ? 'selected' : '' ?>>Opérateur</option>
+                            <option value="Encadreur" <?= isset($agent) && $agent['fonction'] == 'Encadreur' ? 'selected' : '' ?>>Encadreur</option>
+                            <option value="Technicien" <?= isset($agent) && $agent['fonction'] == 'Technicien' ? 'selected' : '' ?>>Technicien</option>
+                            <option value="Directeur" <?= isset($agent) && $agent['fonction'] == 'Directeur' ? 'selected' : '' ?>>Directeur</option>
+                            <option value="Secrétaire" <?= isset($agent) && $agent['fonction'] == 'Secrétaire' ? 'selected' : '' ?>>Secrétaire</option>
+                            <option value="Comptable" <?= isset($agent) && $agent['fonction'] == 'Comptable' ? 'selected' : '' ?>>Comptable</option>
+                            <option value="Archiviste" <?= isset($agent) && $agent['fonction'] == 'Archiviste' ? 'selected' : '' ?>>Archiviste</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="budget" class="form-label">Budget</label>
+                        <select class="form-select" id="budget" name="budget" required>
+                            <option value="">Sélectionnez</option>
+                            <option value="Général" <?= isset($agent) && $agent['budget'] == 'Général' ? 'selected' : '' ?>>Général</option>
+                            <option value="Projet" <?= isset($agent) && $agent['budget'] == 'Projet' ? 'selected' : '' ?>>Projet</option>
+                            <option value="Autonome" <?= isset($agent) && $agent['budget'] == 'Autonome' ? 'selected' : '' ?>>Autonome</option>
+                            <option value="Annexe" <?= isset($agent) && $agent['budget'] == 'Annexe' ? 'selected' : '' ?>>Annexe</option>
+                            <option value="Autres" <?= isset($agent) && $agent['budget'] == 'Autres' ? 'selected' : '' ?>>Autres</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="ImpeBudg" class="form-label">Imputation Budgétaire</label>
+                        <input type="text" id="ImpeBudg" name="ImpeBudg" class="form-control"
+                            value="<?= isset($agent) ? esc($agent['ImpeBudg']) : '' ?>">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="direction" class="form-label">Direction</label>
+                        <select id="direction" name="direction" class="form-select" required>
+                            <option value="">Sélectionnez</option>
+                            <option value="DGS" <?= isset($agent) && $agent['direction'] == 'DGS' ? 'selected' : '' ?>>DGS</option>
+                            <option value="DGANS" <?= isset($agent) && $agent['direction'] == 'DGANS' ? 'selected' : '' ?>>DG ANS</option>
+                            <option value="DGTAF" <?= isset($agent) && $agent['direction'] == 'DGTAF' ? 'selected' : '' ?>>DG TAFITA</option>
+                            <option value="INJ" <?= isset($agent) && $agent['direction'] == 'INJ' ? 'selected' : '' ?>>INJ</option>
+                            <option value="CRJS" <?= isset($agent) && $agent['direction'] == 'CRJS' ? 'selected' : '' ?>>CRJS</option>
+                            <option value="DAF" <?= isset($agent) && $agent['direction'] == 'DAF' ? 'selected' : '' ?>>DAF</option>
+                            <option value="DRH" <?= isset($agent) && $agent['direction'] == 'DRH' ? 'selected' : '' ?>>DRH</option>
+                            <option value="DIL" <?= isset($agent) && $agent['direction'] == 'DIL' ? 'selected' : '' ?>>DIL</option>
+                            <option value="DCAI" <?= isset($agent) && $agent['direction'] == 'DCAI' ? 'selected' : '' ?>>DCAI</option>
+                            <option value="SPCIJ" <?= isset($agent) && $agent['direction'] == 'SPCIJ' ? 'selected' : '' ?>>SPCIJ</option>
+                            <option value="EPQE" <?= isset($agent) && $agent['direction'] == 'EPQE' ? 'selected' : '' ?>>CN-EPQE</option>
+                            <option value="DSI" <?= isset($agent) && $agent['direction'] == 'DRH' ? 'selected' : '' ?>>DSI</option>
+                        </select>
+                    </div>
                 </div>
-            </div>
 
             <div class="form-section">
                 <h5>AUTRES INFORMATIONS</h5>
@@ -182,10 +230,28 @@
                         <select id="localisation" name="localisation" class="form-select" required>
                             <option value="">Sélectionnez</option>
                             <option value="Analamanga" <?= isset($agent) && $agent['localisation'] == 'Analamanga' ? 'selected' : '' ?>>Analamanga</option>
-                            <option value="Antananarivo" <?= isset($agent) && $agent['localisation'] == 'Antananarivo' ? 'selected' : '' ?>>Antananarivo</option>
-                            <option value="Fianarantsoa" <?= isset($agent) && $agent['localisation'] == 'Fianarantsoa' ? 'selected' : '' ?>>Fianarantsoa</option>
-                            <option value="Menabe" <?= isset($agent) && $agent['localisation'] == 'Menabe' ? 'selected' : '' ?>>Menabe</option>
+                            <option value="Bongolava" <?= isset($agent) && $agent['localisation'] == 'Bongolava' ? 'selected' : '' ?>>Bongolava</option>
+                            <option value="Itasy" <?= isset($agent) && $agent['localisation'] == 'Itasy' ? 'selected' : '' ?>>Itasy</option>
+                            <option value="Amoron_Mania" <?= isset($agent) && $agent['localisation'] == 'Amoron_Mania' ? 'selected' : '' ?>>Amoron’i Mania</option>
+                            <option value="Haute_Matsiatra" <?= isset($agent) && $agent['localisation'] == 'Haute_Matsiatra' ? 'selected' : '' ?>>Haute Matsiatra</option>
+                            <option value="Ihorombe" <?= isset($agent) && $agent['localisation'] == 'Ihorombe' ? 'selected' : '' ?>>Ihorombe</option>
+                            <option value="Vatovavy" <?= isset($agent) && $agent['localisation'] == 'Vatovavy' ? 'selected' : '' ?>>Vatovavy</option>
+                            <option value="Fitovinany" <?= isset($agent) && $agent['localisation'] == 'Fitovinany' ? 'selected' : '' ?>>Fitovinany</option>
+                            <option value="Alaotra-Mangoro" <?= isset($agent) && $agent['localisation'] == 'Alaotra-Mangoro' ? 'selected' : '' ?>>Alaotra-Mangoro</option>
+                            <option value="Atsinanana" <?= isset($agent) && $agent['localisation'] == 'Atsinanana' ? 'selected' : '' ?>>Atsinanana</option>
+                            <option value="Analanjirofo" <?= isset($agent) && $agent['localisation'] == 'Analanjirofo' ? 'selected' : '' ?>>Analanjirofo</option>
+                            <option value="Betsiboka" <?= isset($agent) && $agent['localisation'] == 'Betsiboka' ? 'selected' : '' ?>>Betsiboka</option>
                             <option value="Boeny" <?= isset($agent) && $agent['localisation'] == 'Boeny' ? 'selected' : '' ?>>Boeny</option>
+                            <option value="Melaky" <?= isset($agent) && $agent['localisation'] == 'Melaky' ? 'selected' : '' ?>>Melaky</option>
+                            <option value="Sofia" <?= isset($agent) && $agent['localisation'] == 'Sofia' ? 'selected' : '' ?>>Sofia</option>
+                            <option value="Atsimo-Andrefana" <?= isset($agent) && $agent['localisation'] == 'Atsimo-Andrefana' ? 'selected' : '' ?>>Atsimo-Andrefana</option>
+                            <option value="Androy" <?= isset($agent) && $agent['localisation'] == 'Androy' ? 'selected' : '' ?>>Androy</option>
+                            <option value="Anosy" <?= isset($agent) && $agent['localisation'] == 'Anosy' ? 'selected' : '' ?>>Anosy</option>
+                            <option value="Menabe" <?= isset($agent) && $agent['localisation'] == 'Menabe' ? 'selected' : '' ?>>Menabe</option>
+                            <option value="Diana" <?= isset($agent) && $agent['localisation'] == 'Diana' ? 'selected' : '' ?>>Diana</option>
+                            <option value="Sava" <?= isset($agent) && $agent['localisation'] == 'Sava' ? 'selected' : '' ?>>Sava</option>
+                            <option value="Vakinankaratra" <?= isset($agent) && $agent['localisation'] == 'Vakinankaratra' ? 'selected' : '' ?>>Vakinankaratra</option>
+                            <option value="Atsimo-Atsinanana" <?= isset($agent) && $agent['localisation'] == 'Atsimo-Atsinanana' ? 'selected' : '' ?>>Atsimo-Atsinanana</option>
                         </select>
                     </div>
                 </div>

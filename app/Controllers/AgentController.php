@@ -72,7 +72,10 @@ class AgentController extends BaseController
             'date_entree' => $this->request->getPost('date_entree'),
             'corps' => $this->request->getPost('corps'),
             'grade' => $this->request->getPost('grade'),
-            'indice' => $this->request->getPost('indice'),
+            'grade' => $this->request->getPost('grade'),
+            'fonction' => $this->request->getPost('fonction'),
+            'budget' => $this->request->getPost('budget'),
+            'ImpeBudg' => $this->request->getPost('ImpeBudg'),
             'qualite' => $this->request->getPost('qualite'),
             'localisation' => $this->request->getPost('localisation'),
             'direction' => $this->request->getPost('direction')
@@ -102,7 +105,7 @@ class AgentController extends BaseController
                 'details' => json_encode($data),
             ]);
 
-            return redirect()->to('/agents')->with('success', 'Agent ajouté avec succès');
+            return redirect()->to('ajoutAgent')->with('success', 'Agent ajouté avec succès');
         } else {
             return redirect()->back()->with('error', 'Erreur lors de l\'ajout de l\'agent.');
         }

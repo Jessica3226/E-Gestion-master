@@ -97,6 +97,9 @@
                         <th>Date d'Entrée</th>
                         <th>Corps</th>
                         <th>Grade</th>
+                        <th>Fonction</th>
+                        <th>Budget</th>
+                        <th>Imputation Budgétaire</th>
                         <th>Indice</th>
                         <th>Qualité</th>
                         <th>Localisation</th>
@@ -117,6 +120,9 @@
                             <td><?= esc($agent['date_entree']); ?></td>
                             <td><?= esc($agent['corps']); ?></td>
                             <td><?= esc($agent['grade']); ?></td>
+                            <td><?= esc($agent['fonction']); ?></td>
+                            <td><?= esc($agent['budget']); ?></td>
+                            <td><?= esc($agent['ImpeBudg']); ?></td>
                             <td><?= esc($agent['indice']); ?></td>
                             <td><?= esc($agent['qualite']); ?></td>
                             <td><?= esc($agent['localisation']); ?></td>

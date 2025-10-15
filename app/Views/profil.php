@@ -49,6 +49,7 @@ header("Pragma: no-cache");
         <a href="/completer-info/edit/<?= $agent['id'] ?>" class="btn btn-sm btn-outline-primary mt-2">
             <i class="bi bi-pencil-fill me-1"></i> Modifier mes infos
         </a>
+        
     </div>
       
       <!-- Centre : Photo + Nom -->

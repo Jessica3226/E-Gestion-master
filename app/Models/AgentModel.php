@@ -11,7 +11,7 @@ class AgentModel extends Model
     protected $useAutoIncrement = true;
     protected $allowedFields    = [
         'matricule', 'photo', 'nom', 'prenom', 'date_naissance', 'contact', 'cin', 'situation_matrimoniale', 
-        'date_entree', 'corps', 'grade', 'indice', 'qualite', 'localisation', 'direction', 'password', 'email', 'adresse', 'is_logged_in'
+        'date_entree', 'corps', 'grade', 'indice', 'qualite', 'localisation', 'direction', 'password', 'email', 'adresse', 'fonction', 'budget', 'ImpeBudg','is_logged_in'
     ];
     protected $useSoftDeletes   = true;
     protected $useTimestamps    = true;
@@ -32,7 +32,11 @@ class AgentModel extends Model
         'corps'            => 'required|max_length[30]',
         'grade'            => 'required|max_length[15]',
         'grade'            => 'required|max_length[15]',
+        'fonction'          => 'required|max_length[30]',
+        'budget'          => 'required|max_length[30]',
+        'ImpeBudg'          => 'required|max_length[30]',
         'qualite'          => 'required|max_length[30]',
+        'indice'          => 'required|max_length[10]',
         'localisation'           => 'required|max_length[30]',
         'direction'         => 'required|max_length[30]',
     ];

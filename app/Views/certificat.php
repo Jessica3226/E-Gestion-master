@@ -27,8 +27,8 @@ header("Pragma: no-cache");
             <p>--------------------</p>
             <p>DIRECTION DES RESOURCES HUMAINES</p>
             <p>--------------------</p>
-            <!-- <p>Numero : XXX/MJS/SG/DRH</p> -->
-            <p>Numero : <?= esc($numero) ?></p>
+            <p>Numero :   ______  /MJS/SG/DRH</p>
+            <!-- <p>Numero : <?= esc($numero) ?></p> -->
         </div>
     </div>
 
@@ -52,11 +52,11 @@ header("Pragma: no-cache");
                 </tr>
                 <tr>
                     <td><strong>Fonction </strong></td>
-                    <td>:</td>
+                    <td>: <?= esc($agent['fonction']) ?></td>
                 </tr>
                 <tr>
                     <td><strong>Corps et Grade </strong></td>
-                    <td>: <?= esc($agent['corps']) ?></td>
+                    <td>: <?= esc($agent['corps']) ?>  <?= esc($agent['grade']) ?></td>
                 </tr>
                 <tr>
                     <td><strong>Indice </strong></td>
@@ -64,7 +64,7 @@ header("Pragma: no-cache");
                 </tr>
                 <tr>
                     <td><strong>Imputation Budgétaire </strong></td>
-                    <td>:</td>
+                    <td>: <?= esc($agent['ImpeBudg']) ?></td>
                 </tr>
                 <tr>
                     <td><strong>Date de Naissance </strong></td>
@@ -76,7 +76,7 @@ header("Pragma: no-cache");
                 </tr>
                 <tr>
                     <td><strong>Budget </strong></td>
-                    <td>: </td>
+                    <td>: <?= esc($agent['budget']) ?></td>
                 </tr>
                 <tr>
                     <td><strong>Localité de service </strong></td>

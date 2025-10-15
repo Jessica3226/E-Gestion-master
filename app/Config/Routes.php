@@ -21,9 +21,9 @@ $routes->get('/logout', 'Auth::logout');
 $routes->get('/situation', 'SituationController::situationAdministrative');
 
 
-$routes->get('/auth/check-info', 'Auth::checkInfo');
-$routes->get('/completer-info', 'Auth::completerInfo');
-$routes->post('/auth/save-info', 'Auth::saveInfo');
+$routes->get('/completer-info', 'ProfilController::completerInfo');
+$routes->get('/completer-info/edit/(:num)', 'ProfilController::completerInfo/$1');
+$routes->post('/auth/save-info', 'ProfilController::saveInfo');
 
 $routes->get('/update-statut/(:segment)/(:segment)', 'Dashboard::updateStatut/$1/$2');
 $routes->get('imprimer/(:num)', 'Dashboard::imprimer/$1');
